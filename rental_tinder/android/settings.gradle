@@ -1,0 +1,3 @@
+rootProject.name = 'rental_tinder'
+
+include ':app'
