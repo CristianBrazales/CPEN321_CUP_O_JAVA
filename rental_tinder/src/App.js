@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
 import firebase from 'firebase';
-import { Header } from './components/common';
+import {View} from 'react-native';
 import LoginForm from './components/LoginForm';
 import SignupForm from './components/SignupForm';
-
+import Router from './Router';
 
 
 
@@ -22,10 +21,9 @@ class App extends Component {
     }
     render(){
         return (
-            <View>
-                <Header headerText ='Rental Tinder'/>
-                <LoginForm/>
-            </View>
+            
+                <Router/>  
+
         );
     }
 
