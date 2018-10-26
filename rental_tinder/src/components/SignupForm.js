@@ -52,7 +52,7 @@ class SignupForm extends Component {
                 </CardSection>
                 
                 <CardSection>
-                <Button onPress={() =>{handlePress_create_user()}}>
+                <Button onPress={() =>{this.handlePress_create_user.bind(this)}}>
                    Submit!
                 </Button>
                 </CardSection>
@@ -62,22 +62,25 @@ class SignupForm extends Component {
             </Card>
         );
     }
+
+
+    handlePress_create_user = async () => {
+        fetch('http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: this.state.userName,
+                password: this.state.setpassword,
+               
+    
+            }),
+    
+        })
+            .catch(error => console.error('Error:', error));
+    };
+
 }
 
-handlePress_create_user = async () => {
-    fetch('http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/register', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            username: this.userName,
-            password: this.setpassword,
-           
-
-        }),
-
-    })
-        .catch(error => console.error('Error:', error));
-};
 export default SignupForm;
