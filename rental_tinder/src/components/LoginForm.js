@@ -6,7 +6,7 @@ import { Actions } from  'react-native-router-flux';
 
 
 class LoginForm extends Component {
-    state = { email: '', password: ''};
+    state = { username: '', password: ''};
     
 
     render(){
@@ -17,9 +17,9 @@ class LoginForm extends Component {
                 <CardSection>
                     <Input 
                     placeholder = "user@gmail.com"
-                    label ="Email:"
-                    value={this.state.email}
-                    onChangeText={email => this.setState({ email })}
+                            label="Email:"
+                            value={this.state.username}
+                    onChangeText={email => this.setState({ username })}
                     />
                 </CardSection>
 
@@ -39,14 +39,14 @@ class LoginForm extends Component {
                 
                 
                 <CardSection>
-                <Button >
+                        <Button onPress={() => { Actions.Signup() }}>
                     Log In
                 </Button>
                 </CardSection>
 
                 
                 <CardSection>
-                <Button  onPress={() =>{Actions.Signup()}}>
+                        <Button onPress={this.handlePress_login_user.bind(this)}>
                     Sign Up
                 </Button>
                 </CardSection>
@@ -66,7 +66,22 @@ const mapStateToProps = state => {
 
 };
 
+handlePress_login_user = async () => {
+    fetch('http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            username: this.state.username,
+            password: this.state.password,
+           
 
+        }),
+
+    })
+        .catch(error => console.error('Error:', error));
+}
 
 
 export default LoginForm;
