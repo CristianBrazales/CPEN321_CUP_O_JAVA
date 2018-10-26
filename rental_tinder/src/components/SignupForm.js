@@ -1,7 +1,8 @@
 import React ,{ Component } from 'react';
-import {Button, Card, CardSection, Input} from './common'
+import {Button, Card, CardSection,  Input} from './common'
 
-class LoginForm extends Component {
+
+class SignupForm extends Component {
 
     state ={ userName:'', email: '', setpassword: '', phonenumber: ''};
 
@@ -13,7 +14,7 @@ class LoginForm extends Component {
                 <CardSection>
                     <Input 
                     placeholder = "please enter username"
-                    label ="Username:"
+                    label ="User name:"
                     value={this.state.userName}
                     onChangeText={userName =>this.setState({userName})}
                     />
@@ -51,7 +52,7 @@ class LoginForm extends Component {
                 </CardSection>
                 
                 <CardSection>
-                    <Button onPress={this.handlePress_create_user.bind(this)}>
+                <Button onPress={() =>{handlePress_create_user()}}>
                    Submit!
                 </Button>
                 </CardSection>
@@ -62,6 +63,7 @@ class LoginForm extends Component {
         );
     }
 }
+
 handlePress_create_user = async () => {
     fetch('http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/register', {
         method: 'POST',
@@ -71,12 +73,11 @@ handlePress_create_user = async () => {
         body: JSON.stringify({
             username: this.userName,
             password: this.setpassword,
-            email: this.email,
-            phonenumber: this.phonenumber
+           
 
         }),
 
     })
         .catch(error => console.error('Error:', error));
-}
-export default LoginForm;
+};
+export default SignupForm;
