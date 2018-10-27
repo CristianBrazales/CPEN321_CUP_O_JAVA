@@ -26,6 +26,7 @@ var User                     = require("./database/users");
 var signupRoute               = require("./routes/signup");
 var homepageRoute             = require("./routes/homepage");
 var loggedinRoute             = require("./routes/loggedin");
+var failureRoute              = require("./routes/failure");
 
 //================
 //APP Config
@@ -64,7 +65,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use(homepageRoute);
 app.use(signupRoute);
 app.use(loggedinRoute);
-
+app.use(failureRoute );
 //==========
 // Authentication routes
 //===========
@@ -76,7 +77,7 @@ app.get("/login",function(req,res){
 app.post("/login",passport.authenticate("local",{
 
     successRedirect:"/loggedin",
-    failureRedirect: "/login"
+    failureRedirect: "/failure"
 
 }),function(req,res){
 
