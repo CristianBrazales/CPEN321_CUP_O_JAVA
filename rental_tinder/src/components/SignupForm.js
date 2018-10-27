@@ -1,10 +1,11 @@
 import React ,{ Component } from 'react';
 import {Button, Card, CardSection,  Input} from './common'
+import {Alert} from 'react-native';
 
 
 class SignupForm extends Component {
 
-    state ={ userName:'', email: '', setpassword: '', phonenumber: ''};
+    state ={ userName:'', email: '', password: '', phonenumber: ''};
 
 
 
@@ -52,7 +53,7 @@ class SignupForm extends Component {
                 </CardSection>
                 
                 <CardSection>
-                <Button onPress={() =>{this.handlePress_create_user.bind(this)}}>
+                <Button onPress={this.handlePress_create_user.bind(this)}>
                    Submit!
                 </Button>
                 </CardSection>
@@ -65,18 +66,17 @@ class SignupForm extends Component {
 
 
     handlePress_create_user = async () => {
+        Alert.alert(JSON.stringify({
+            "username": this.state.userName,
+            "password": this.state.password
+        
+        }));
         fetch('http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/register', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: JSON.stringify({
-                username: this.state.userName,
-                password: this.state.setpassword,
-               
-    
-            }),
-    
+            body: 'username=' +this.state.userName+ '&password=' + this.state.password
         })
             .catch(error => console.error('Error:', error));
     };
