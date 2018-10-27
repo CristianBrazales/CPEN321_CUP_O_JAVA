@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import {Button, Card, CardSection, Input, Header} from './common';
 import { Actions } from  'react-native-router-flux';
 
-
+// The main pages which is shown to the user, The loginform contains two input secion (Email, Password) and two buttons (login and signup)
 class LoginForm extends Component {
     state = { email: '', password: ''};
     
@@ -16,8 +16,8 @@ class LoginForm extends Component {
             <Card>
                 <CardSection>
                     <Input 
-                    placeholder = "user@gmail.com"
-                    label ="Email:"
+                    placeholder = "username"
+                    label ="Username:"
                     value={this.state.email}
                     onChangeText={email => this.setState({ email })}
                     />

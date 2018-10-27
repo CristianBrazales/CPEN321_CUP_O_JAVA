@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
-import firebase from 'firebase';
-import {View} from 'react-native';
-import LoginForm from './components/LoginForm';
-import SignupForm from './components/SignupForm';
 import Router from './Router';
 
 
-
+//The main module of the app
 
 class App extends Component {
 
