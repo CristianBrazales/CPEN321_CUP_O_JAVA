@@ -1,12 +1,11 @@
 import React ,{ Component } from 'react';
-import firebase from 'firebase';
 import { View } from 'react-native';
 import {Button, Card, CardSection, Input, Header} from './common';
 import { Actions } from  'react-native-router-flux';
 
 // The main pages which is shown to the user, The loginform contains two input secion (Email, Password) and two buttons (login and signup)
 class LoginForm extends Component {
-    state = { email: '', password: ''};
+    state = { username: '', password: ''};
     
 
     render(){
@@ -17,9 +16,9 @@ class LoginForm extends Component {
                 <CardSection>
                     <Input 
                     placeholder = "username"
-                    label ="Username:"
-                    value={this.state.email}
-                    onChangeText={email => this.setState({ email })}
+                            label="Username:"
+                            value={this.state.username}
+                    onChangeText={email => this.setState({ username })}
                     />
                 </CardSection>
 

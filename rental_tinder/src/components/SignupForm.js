@@ -76,7 +76,7 @@ class SignupForm extends Component {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: 'username=' +this.state.userName+ '&password=' + this.state.password
+            body: 'username=' + this.state.userName + '&password=' + this.state.password + '&email=' + this.state.email + '&phonenumber=' + this.state.phonenumber
         })
             .catch(error => console.error('Error:', error));
     };
