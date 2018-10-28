@@ -32,7 +32,8 @@ var failureRoute              = require("./routes/failure");
 //APP Config
 //================
 
-//app.use(redirectToHTTPS([/localhost:80/], [], 301));
+
+//connecting to the database
 mongoose.connect("mongodb://localhost:27017/rental_tinder_database",{ useNewUrlParser: true });
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
@@ -74,6 +75,7 @@ app.get("/login",function(req,res){
    res.render("login");
 });
 
+//authenticating the user credentials against the database
 app.post("/login",passport.authenticate("local",{
 
     successRedirect:"/loggedin",
