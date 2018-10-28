@@ -18,7 +18,7 @@ class LoginForm extends Component {
                     placeholder = "username"
                             label="Username:"
                             value={this.state.username}
-                    onChangeText={email => this.setState({ username })}
+                    onChangeText={username => this.setState({ username })}
                     />
                 </CardSection>
 
@@ -57,8 +57,8 @@ class LoginForm extends Component {
 
 const mapStateToProps = state => {
 
-    return{
-        email: state.auth.email
+    return {
+        username: state.auth.username
 
     };
 
