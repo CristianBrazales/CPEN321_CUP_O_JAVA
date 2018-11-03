@@ -5,7 +5,7 @@ var passport              = require("passport");
 
 //if the user authentication fails, just send a failure message to the react native
 router.get("/failure",function(req,res){
-  res.send("Failure");
+  res.send({"success":false, "message": "User not found"});
 });
 
 
