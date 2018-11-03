@@ -18,6 +18,9 @@ var expressSession           = require("express-session");
 //database stuff
 
 var User                     = require("./database/users");
+var Posting                  = require("./database/posting");
+
+var user;
 
 //================
 //Routes variables
@@ -28,7 +31,7 @@ var homepageRoute             = require("./routes/homepage");
 var loggedinRoute             = require("./routes/loggedin");
 var failureRoute              = require("./routes/failure");
 var successRoute              = require("./routes/success");
-
+var postingRoute              = require("./routes/ads");
 //================
 //APP Config
 //================
@@ -64,11 +67,19 @@ passport.deserializeUser(User.deserializeUser());
 //Routes
 //================
 
+app.use(function(req,res,next){
+    user = req.user;
+    //To move on to the next part or after what the middleware comes
+    //we need next
+    next();
+});
+
 app.use(homepageRoute);
 app.use(signupRoute);
 app.use(loggedinRoute);
 app.use(failureRoute );
 app.use(successRoute);
+app.use(postingRoute);
 //==========
 // Authentication routes
 //===========
@@ -78,12 +89,31 @@ app.get("/login",function(req,res){
 });
 
 //authenticating the user credentials against the database
-app.post("/login",testConsole,passport.authenticate("local",{
+app.post("/login",function(req,res,next){
+  User.find({"username":req.body.username},function(err,foundUser){
+    if(err){
+      return next();
+    }
+      user = foundUser[0].username;
+      console.log(user);
+      next();
 
-    successRedirect:"/success",
-    failureRedirect: "/failure"
+  });
+},
+// passport.authenticate("local",{
+//
+//     successRedirect:"/success" + "/" + user,
+//     failureRedirect: "/failure"
+//
+// }),function(req,res){
+//  console.log(req.body);
+// });
 
-}),function(req,res){
+passport.authenticate("local"),
+
+  function(req,res){
+    res.redirect("/success/"+user);
+  },function(req,res){
  console.log(req.body);
 });
 
@@ -98,6 +128,17 @@ app.get("/logout",function(req, res) {
     res.redirect("/");
 });
 
+
+// function findUser(){
+//   User.find({"username":req.body.username},function(err,foundUser){
+//     if(err){
+//       return next();
+//     }
+//       user = foundUser.username;
+//       console.log(user);
+//
+//   });
+// }
 
 //this function checks if the user is logged in or not
 function isLoggedIn(req,res,next){
