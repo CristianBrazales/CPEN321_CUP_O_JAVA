@@ -27,6 +27,7 @@ var signupRoute               = require("./routes/signup");
 var homepageRoute             = require("./routes/homepage");
 var loggedinRoute             = require("./routes/loggedin");
 var failureRoute              = require("./routes/failure");
+var successRoute              = require("./routes/success");
 
 //================
 //APP Config
@@ -67,6 +68,7 @@ app.use(homepageRoute);
 app.use(signupRoute);
 app.use(loggedinRoute);
 app.use(failureRoute );
+app.use(successRoute);
 //==========
 // Authentication routes
 //===========
