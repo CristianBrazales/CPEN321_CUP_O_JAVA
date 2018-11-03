@@ -32,6 +32,7 @@ var loggedinRoute             = require("./routes/loggedin");
 var failureRoute              = require("./routes/failure");
 var successRoute              = require("./routes/success");
 var postingRoute              = require("./routes/ads");
+var searchRoute               = require("./routes/searching");
 //================
 //APP Config
 //================
@@ -80,6 +81,7 @@ app.use(loggedinRoute);
 app.use(failureRoute );
 app.use(successRoute);
 app.use(postingRoute);
+app.use(searchRoute);
 //==========
 // Authentication routes
 //===========
