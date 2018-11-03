@@ -78,19 +78,19 @@ app.get("/login",function(req,res){
 });
 
 //authenticating the user credentials against the database
-// app.post("/login",testConsole,passport.authenticate("local",{
-//
-//     successRedirect:"/success",
-//     failureRedirect: "/failure"
-//
-// }),function(req,res){
-//  console.log(req.body);
-// });
+app.post("/login",testConsole,passport.authenticate("local",{
 
+    successRedirect:"/success",
+    failureRedirect: "/failure"
 
-app.post("/login",function(req,res){
+}),function(req,res){
  console.log(req.body);
 });
+
+
+// app.post("/login",function(req,res){
+//  console.log(req.body);
+// });
 
 //LogOut
 app.get("/logout",function(req, res) {
