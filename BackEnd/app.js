@@ -84,7 +84,7 @@ app.post("/login",passport.authenticate("local",{
     failureRedirect: "/failure"
 
 }),function(req,res){
-
+ console.log(req.body);
 });
 
 //LogOut
