@@ -78,12 +78,17 @@ app.get("/login",function(req,res){
 });
 
 //authenticating the user credentials against the database
-app.post("/login",testConsole,passport.authenticate("local",{
+// app.post("/login",testConsole,passport.authenticate("local",{
+//
+//     successRedirect:"/success",
+//     failureRedirect: "/failure"
+//
+// }),function(req,res){
+//  console.log(req.body);
+// });
 
-    successRedirect:"/success",
-    failureRedirect: "/failure"
 
-}),function(req,res){
+app.post("/login",function(req,res){
  console.log(req.body);
 });
 
@@ -102,9 +107,7 @@ function isLoggedIn(req,res,next){
     res.redirect("/login");
 }
 
-function testConsole(){
-  console.log(req.body);
-}
+
 
 
 
