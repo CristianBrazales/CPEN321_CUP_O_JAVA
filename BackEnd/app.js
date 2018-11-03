@@ -78,7 +78,7 @@ app.get("/login",function(req,res){
 //authenticating the user credentials against the database
 app.post("/login",passport.authenticate("local",{
 
-    successRedirect:"/loggedin",
+    successRedirect:"/success",
     failureRedirect: "/failure"
 
 }),function(req,res){
