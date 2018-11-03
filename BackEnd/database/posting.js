@@ -7,7 +7,11 @@ var postingSchema = new mongoose.Schema({
     username: String,
     address: String,
     roomNumber: String,
+    earlyMorningPerson: Boolean,
+    partyPerson: Boolean,
     zipcode: String,
+    smoke: Boolean,
+    cooking: String,
     Startdate: Date,
     EndDate:Date
 });

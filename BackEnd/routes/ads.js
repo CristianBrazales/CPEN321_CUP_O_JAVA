@@ -4,8 +4,8 @@ var posting               = require("../database/posting");
 var passport              = require("passport");
 
 //creating a new add for the current user
-router.post("/posting/:id",function(req,res){
-  var newPosting = new posting({username:req.params.id});
+router.post("/posting",function(req,res){
+  var newPosting = new posting({username:req.body.username});
   newPosting.address = req.body.address;
   newPosting.roomNumber = req.body.roomNumber;
   //trying to post this data to the database
