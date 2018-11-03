@@ -1,6 +1,6 @@
 import React ,{ Component } from 'react';
 import {Button, Card, CardSection,  Input} from './common'
-import {Alert} from 'react-native';
+import { View, AsyncStorage, StyleSheet, KeyboardAvoidingView, TouchableOpacity , Alert} from 'react-native';
 const MIN_CHARACTERS = 6;
 
 class SignupForm extends Component {
@@ -78,6 +78,12 @@ class SignupForm extends Component {
                 </Button>
                 </CardSection>
 
+                <CardSection>
+                    <Button onPress={() => this.props.navigation.navigate('signup')}>
+                        go to profile!
+                </Button>
+                </CardSection>
+
                 
                 
             </Card>
@@ -87,17 +93,16 @@ class SignupForm extends Component {
 
     handlePress_create_user = async () => {
         // upon submit first check the inputs, on sucess send the data
-        this.validate_username(this.state.userName)
-        this.validate_password(this.state.password)
+        await this.validate_username(this.state.userName)
+        await  this.validate_password(this.state.password)
         
         if (this.state.passwordValidate == true && this.state.nameValidate== true) {
 
-
-
             Alert.alert(JSON.stringify(
-                "sucess"
+                "Sucess log in, please "
 
             ));
+               
             fetch('http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/register', {
                 method: 'POST',
                 headers: {
@@ -106,10 +111,12 @@ class SignupForm extends Component {
                 body: 'username=' + this.state.userName + '&password=' + this.state.password + '&email=' + this.state.email + '&phonenumber=' + this.state.phonenumber
             })
                 .catch(error => console.error('Error:', error));
+            this.props.navigation.navigate('login');
         }
         // look for the error
         else {
             if (this.state.passwordValidate == false && this.state.nameValidate == false) {
+                
                 Alert.alert(JSON.stringify(
                     "please check the username and password"
 

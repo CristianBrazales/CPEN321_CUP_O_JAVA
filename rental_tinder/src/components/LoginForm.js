@@ -19,7 +19,71 @@ class LoginForm extends Component {
         if (value !== null)
             this.props.navigation.navigate('profile');
     }
+    
+    login = async () => {
+       
+        fetch('http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/login',{
+            method: 'POST',
+            credentials: 'include',
 
+         
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            
+            body: 'username=' + this.state.username + '&password=' + this.state.password
+            })
+            .then((response) => response.json())
+            .then((res) => {
+               
+                if (res.success == true) {
+                    alert(res.username);
+                    var string = JSON.stringify(res.username);
+                    console.warn(string);
+
+                    AsyncStorage.setItem('username', string);
+                    this.props.navigation.navigate('profile');
+                }
+                else {
+                    alert(res.message);
+                }
+            }).catch((error) => {
+                alert("please, check the password and username");
+                this.props.navigation.navigate('login');
+            }).done();
+            
+        }
+
+
+    /*
+    login =  async () => {
+        
+        fetch('http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/login', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+
+            },
+            body: JSON.stringify({
+                username : this.state.username,
+                password: this.state.password
+            })
+        })
+            .then((response) => response.json())
+            .then((res) => {
+                alert(res.message);
+                if (res.success == true) {
+                    AsyncStorage.setItem('user', res.user);
+                    this.props.navigation.navigate('profile');
+                }
+                else {
+                    alert(res.message);
+                }
+            }).catch((error) => {
+                console.error(error);
+            }).done();
+    }*/
     render(){
         return(
             <View>
@@ -50,7 +114,7 @@ class LoginForm extends Component {
                 
                 
                 <CardSection>
-                        <Button onPress={this.login} >
+                        <Button onPress={ this.login} >
                     Log In 
                 </Button>
                 </CardSection>
@@ -66,36 +130,8 @@ class LoginForm extends Component {
         );
     }
 }
-signup = () => {
-    this.props.navigation.navigate('SignupForm');
-}
-login = () => {
-    this.props.navigation.navigate('profile');
-    fetch('', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
 
-        },
-        body: JSON.stringify({
-            username: this.state.username,
-            password: this.state.password,
-        })
-    })
-            .then((response) => response.json())
-            .then((res) => {
 
-                if (res.sucess == true) {
-                    AsyncStorage.setItem('user', res.user);
-                    this.props.navigation.navigate('profile');
-                }
-                else {
-                    alert(res.message);
-                }
-            })
-                .done();
-    }
         
 
 
