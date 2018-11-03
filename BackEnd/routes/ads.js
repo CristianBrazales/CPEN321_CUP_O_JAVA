@@ -8,6 +8,10 @@ router.post("/posting",function(req,res){
   var newPosting = new posting({username:req.body.username});
   newPosting.address = req.body.address;
   newPosting.roomNumber = req.body.roomNumber;
+  newPosting.zipcode = req.body.zipcode;
+  newPosting.smoke = req.body.smoke;
+  newPosting.earlyMorningPerson = req.body.earlyMorningPerson;
+  newPosting.partyPerson = req.body.partyPerson;
   //trying to post this data to the database
   posting.create(newPosting,function(err,returnedRoom){
     if(err){
