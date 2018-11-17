@@ -10,7 +10,9 @@ const MAX_NUMBER = 20;
 
 class PostForm extends Component {
     // for sign in, we need the following fields
-    state = { address: '', roomNumber: '',  addressValidate: false, roomNumberValidate: false, startDateTimePickerVisible: false , endDateTimePickerVisible:false, startDate: '', endDate:''};
+    state = { address: '', roomNumber: '',  addressValidate: false, smoker: true,
+    drinker: false, usernameF: 'Cristian', zipcodeF: 'v6m1r9'
+    ,zipcode: '', roomNumberValidate: false, startDateTimePickerVisible: false , endDateTimePickerVisible:false, startDate: '', endDate:''};
    // validate the address input
     validate_address (address) {
         alph = /^[a-zA-Z]+$/
@@ -27,48 +29,59 @@ class PostForm extends Component {
             } else {
                 this.setState({ roomNumberValidate: false, })
             }
-            
+
   }
 
   showStartDateTimePicker = () => this.setState({ startDateTimePickerVisible: true });
 
   showEndDateTimePicker = () => this.setState({ endDateTimePickerVisible: true });
-  
+
   hideStartDateTimePicker = () => this.setState({ startDateTimePickerVisible: false });
-  
+
   hideEndDateTimePicker = () => this.setState({ endDateTimePickerVisible: false });
 
   handleStartDatePicked = (date) => {
     this.setState({startDate: date})
     this.hideStartDateTimePicker();
+
   };
-  
+
   handleEndDatePicked = (date) => {
     this.setState({endDate: date})
     this.hideEndDateTimePicker();
   };
-    
+
     render(){
         return(
             <Card>
                 <CardSection>
-                    <Input 
+                    <Input
                     placeholder = "please enter address"
                     label ="Address:"
                     value={this.state.address}
                         onChangeText={address => this.setState({ address })}
-                        
+
             />
                 </CardSection>
 
                 <CardSection>
-                    <Input 
+                    <Input
                     placeholder = "How many rooms do you have"
-                    label ="Number of rooms:"
+                    label ="# Rooms:"
                     value={this.state.roomNumber}
                     onChangeText={roomNumber =>this.setState({roomNumber})}
                     />
                 </CardSection>
+
+                <CardSection>
+                    <Input
+                    placeholder = "Zipcode:V6T1X6"
+                    label =" Zipcode:"
+                    value={this.state.zipcode}
+                    onChangeText={zipcode =>this.setState({zipcode})}
+                    />
+                </CardSection>
+
 
                 <CardSection>
                 <View style={{ flex: 1 ,justifyContent: 'center',alignItems: 'center' }}>
@@ -103,18 +116,19 @@ class PostForm extends Component {
                 </Button>
                 </CardSection>
 
-                
-                
+
+
             </Card>
         );
     }
 
 
     handlePress_create_post = async () => {
+
         // upon submit first check the inputs, on sucess send the data
-        this.validate_address(this.state.address)
-        this.validate_roomNumber(this.state.roomNumber)
-        
+        await this.validate_address(this.state.address)
+        await this.validate_roomNumber(this.state.roomNumber)
+
         if (this.state.addressValidate == true && this.state.roomNumberValidate== true) {
 
 
@@ -123,15 +137,30 @@ class PostForm extends Component {
                 "sucess posted"
 
             ));
-            fetch('http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/register', {
+
+            fetch('http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/posting', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: 'address=' + this.state.address + '&roomnumber=' + this.state.roomNumber 
-            })
-                .catch(error => console.error('Error:', error));
-        }
+                body:'username='+ this.state.usernameF
+                + '&address=' + this.state.address + '&roomNumber=' + this.state.roomNumber
+                + '&zipcode='+ this.state.zipcode  + '&smoke='+this.state.smoker+ '&partyPerson=' +this.state.drinker
+            }).then((response) => response.json())
+            .then((res) => {
+
+                if (res.success == true){
+
+                  alert(res.message);
+                }
+                if (res.success == false){
+
+                  alert(res.message);
+                }
+                }).catch((error) => {
+                    alert("please, check the password and username");
+        }).done();
+      }
         // look for the error
         else {
             if (this.state.addressValidate == false && this.state.roomNumberValidate == false) {
@@ -152,8 +181,8 @@ class PostForm extends Component {
                 ));
             }
             // set flags
-            
-           
+
+
         }
     };
 

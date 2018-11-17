@@ -9,7 +9,8 @@
   "dependencies": {
     "firebase": "^5.0.3",
     "react": "16.6.0-alpha.8af6728",
-    "react-native": "0.57.3",
+    "react-native": "^0.57.5",
+    "react-native-modal-datetime-picker": "^6.0.0",
     "react-native-router-flux": "^4.0.5",
     "validate.js": "^0.12.0"
   },
