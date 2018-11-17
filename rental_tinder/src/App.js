@@ -5,7 +5,8 @@ import { createStackNavigator } from 'react-navigation';
 import LoginForm from './components/LoginForm';
 import profile from './components/profile';
 import SignupForm from './components/SignupForm';
-//import PostForm from './components/PostForm';
+//import SignupForm from './components/SignupForm';
+import PostForm from './components/PostForm';
 //The main module of the app
 
 const Application = createStackNavigator({
@@ -16,7 +17,7 @@ const Application = createStackNavigator({
         }),
 
     },
-  
+
     signup: {
         screen: SignupForm,
     },
@@ -26,27 +27,27 @@ const Application = createStackNavigator({
             header: null,
         }),
     },
-    /*post: {
+    post_screen: {
         screen: PostForm,
         navigationOptions: () => ({
-            header: null,
+          //  header: null,
         }),
-    } */
+    }
 
-    
+
 });
 
 class App extends Component {
 
-    
+
     render(){
         return (
 
-            <Application />  
+            <Application />
 
         );
     }
 
-} 
+}
 
 export default App;

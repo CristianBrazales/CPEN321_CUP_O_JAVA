@@ -13,14 +13,14 @@ class profile extends Component {
        // var name = await AsyncStorage.getItem('user');
         this.state = { username: '' };
 
-       
+
     }
-  
+
     componentDidMount() {
         this._mounted = true
        this._retrieveData().done();
     }
-    
+
     componentWillUnmount() {
         this._mounted = false
     }
@@ -41,12 +41,12 @@ class profile extends Component {
         //this.setState({ username: 'cristian' })
      //   var value = await AsyncStorage.getItem('user');
         //username => this.setState({ username: user})
-        
+
         try {
             var value = await AsyncStorage.getItem('username');
-            
+
                 this.setState({ username: value})
-            
+
             if (value !== null) {
                 // We have data!!
                 console.log(value);
@@ -64,26 +64,26 @@ class profile extends Component {
             //await this._retrieveData()
             <View >
                 <Welcome_header >
-                    {welcome_message + " " + this.state.username + "!"} 
-                </Welcome_header> 
+                    {welcome_message + " " + this.state.username + "!"}
+                </Welcome_header>
                 <Card>
-               
+
                 <CardSection>
-                        <Button onPress={this.create_post}>
+                        <Button onPress={() => this.props.navigation.navigate('post_screen') }>
                     Creat a post
-                </Button> 
+                </Button>
                 </CardSection>
 
                 <CardSection>
                         <Button onPress={this.search}>
                     Search a post
-                </Button> 
+                </Button>
                 </CardSection>
 
                 <CardSection>
                 <Button>
                     Manage my post
-                </Button> 
+                </Button>
                 </CardSection>
 
                 <CardSection>

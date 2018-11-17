@@ -19,23 +19,23 @@ class LoginForm extends Component {
         if (value !== null)
             this.props.navigation.navigate('profile');
     }
-    
+
     login = async () => {
-       
+
         fetch('http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/login',{
             method: 'POST',
             credentials: 'include',
 
-         
+
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
             },
-            
+
             body: 'username=' + this.state.username + '&password=' + this.state.password
             })
             .then((response) => response.json())
             .then((res) => {
-               
+
                 if (res.success == true) {
                     alert(res.username);
                     var string = JSON.stringify(res.username);
@@ -51,13 +51,13 @@ class LoginForm extends Component {
                 alert("please, check the password and username");
                 this.props.navigation.navigate('login');
             }).done();
-            
+
         }
 
 
     /*
     login =  async () => {
-        
+
         fetch('http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/login', {
             method: 'POST',
             headers: {
@@ -90,7 +90,7 @@ class LoginForm extends Component {
             <Header headerText ='Rental Tinder'/>
             <Card>
                 <CardSection>
-                    <Input 
+                    <Input
                     placeholder = "username"
                             label="Username:"
                             value={this.state.username}
@@ -107,19 +107,19 @@ class LoginForm extends Component {
                         label= "Passwords:"
                         value={this.state.password}
                         onChangeText={password => this.setState({ password })}
-                                       
+
                     />
                 </CardSection>
 
-                
-                
+
+
                 <CardSection>
                         <Button onPress={ this.login} >
-                    Log In 
+                    Log In
                 </Button>
                 </CardSection>
 
-                
+
                 <CardSection>
                         <Button onPress={() => this.props.navigation.navigate('signup') }>
                     Sign Up
@@ -132,7 +132,7 @@ class LoginForm extends Component {
 }
 
 
-        
+
 
 
 const mapStateToProps = state => {

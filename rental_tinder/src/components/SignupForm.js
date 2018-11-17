@@ -24,24 +24,24 @@ class SignupForm extends Component {
             }
 
 
-        
+
   }
-    
+
     render(){
         return(
             <Card>
                 <CardSection>
-                    <Input 
+                    <Input
                     placeholder = "please enter username"
                     label ="User name:"
                     value={this.state.userName}
                         onChangeText={userName => this.setState({ userName })}
-                        
+
             />
                 </CardSection>
 
                 <CardSection>
-                    <Input 
+                    <Input
                     placeholder = "user@gmail.com"
                     label ="Email:"
                     value={this.state.email}
@@ -57,21 +57,21 @@ class SignupForm extends Component {
                         placeholder ="At least 6 characters (only characters)"
                         label= "Set Password:"
                         value={this.state.password}
-                        onChangeText={password => this.setState({ password })}     
-                        
+                        onChangeText={password => this.setState({ password })}
+
                 />
                 </CardSection>
 
-                
+
                 <CardSection>
-                    <Input 
+                    <Input
                     placeholder = "123-4567890"
                     label ="Phone:"
                     value={this.state.phonenumber}
                     onChangeText={phonenumber =>this.setState({phonenumber})}
                     />
                 </CardSection>
-                
+
                 <CardSection>
                 <Button onPress={this.handlePress_create_user.bind(this)}>
                    Submit!
@@ -79,13 +79,13 @@ class SignupForm extends Component {
                 </CardSection>
 
                 <CardSection>
-                    <Button onPress={() => this.props.navigation.navigate('signup')}>
+                    <Button onPress={() => this.props.navigation.navigate('signups')}>
                         go to profile!
                 </Button>
                 </CardSection>
 
-                
-                
+
+
             </Card>
         );
     }
@@ -95,14 +95,14 @@ class SignupForm extends Component {
         // upon submit first check the inputs, on sucess send the data
         await this.validate_username(this.state.userName)
         await  this.validate_password(this.state.password)
-        
+
         if (this.state.passwordValidate == true && this.state.nameValidate== true) {
 
             Alert.alert(JSON.stringify(
                 "Sucess log in, please "
 
             ));
-               
+
             fetch('http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/register', {
                 method: 'POST',
                 headers: {
@@ -116,7 +116,7 @@ class SignupForm extends Component {
         // look for the error
         else {
             if (this.state.passwordValidate == false && this.state.nameValidate == false) {
-                
+
                 Alert.alert(JSON.stringify(
                     "please check the username and password"
 
@@ -134,8 +134,8 @@ class SignupForm extends Component {
                 ));
             }
             // set flags
-            
-           
+
+
         }
     };
 
