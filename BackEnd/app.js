@@ -1,160 +1,209 @@
+var chai = require('chai');
+var expect = chai.expect;
+var app = require ('../app.js');
+//var should = require('chai').should();
+var should = chai.should;
+var chaiHttp = require('chai-http');
+//var data = require('./fakedate.js');
 
-//================
-//Initial initialization
-//================
+chai.use(chaiHttp);
 
-var express                  = require("express");
-var app                      = express();
-var bodyParser               = require("body-parser");
-var request                  = require('request');
-var mongoose                 = require("mongoose");
-var methodOverride           = require("method-override");
-var passport                 = require("passport");
-var localStrategy            = require("passport-local");
-var passportLocalMongoose    = require("passport-local-mongoose");
-var expressSession           = require("express-session");
-//var secure                   = require('express-force-https');
-
-//database stuff
-
-var User                     = require("./database/users");
-var Posting                  = require("./database/posting");
-
-var user;
-
-//================
-//Routes variables
-//================
-
-var signupRoute               = require("./routes/signup");
-var homepageRoute             = require("./routes/homepage");
-var loggedinRoute             = require("./routes/loggedin");
-var failureRoute              = require("./routes/failure");
-var successRoute              = require("./routes/success");
-var postingRoute              = require("./routes/ads");
-var searchRoute               = require("./routes/searching");
-//================
-//APP Config
-//================
-
-
-//connecting to the database
-mongoose.connect("mongodb://localhost:27017/rental_tinder_database",{ useNewUrlParser: true });
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.static("public"));
-app.set("view engine","ejs");
-app.use(methodOverride("_method"));
-
-
-
-
-
-
-//express session initialization
-app.use(expressSession({
-    secret:"Shafi is the best",
-    resave: false,
-    saveUninitialized: false
-}));
-
-//passport initialization
-app.use(passport.initialize());
-app.use(passport.session());
-passport.use(new localStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
-//================
-//Routes
-//================
-
-app.use(function(req,res,next){
-    user = req.user;
-    //To move on to the next part or after what the middleware comes
-    //we need next
-    next();
-});
-
-app.use(homepageRoute);
-app.use(signupRoute);
-app.use(loggedinRoute);
-app.use(failureRoute );
-app.use(successRoute);
-app.use(postingRoute);
-app.use(searchRoute);
-//==========
-// Authentication routes
-//===========
-
-app.get("/login",function(req,res){
-   res.render("login");
-});
-
-//authenticating the user credentials against the database
-app.post("/login",function(req,res,next){
-  User.find({"username":req.body.username},function(err,foundUser){
-    if(err){
-      return next();
-    }
-      user = foundUser[0].username;
-      console.log(user);
-      next();
-
-  });
-},
-// passport.authenticate("local",{
-//
-//     successRedirect:"/success" + "/" + user,
-//     failureRedirect: "/failure"
-//
-// }),function(req,res){
-//  console.log(req.body);
-// });
-
-passport.authenticate("local"),
-
-  function(req,res){
-    res.redirect("/success/"+user);
-  },function(req,res){
- console.log(req.body);
-});
-
-
-// app.post("/login",function(req,res){
-//  console.log(req.body);
-// });
-
-//LogOut
-app.get("/logout",function(req, res) {
-    req.logout();
-    res.redirect("/");
-});
-
-
-// function findUser(){
-//   User.find({"username":req.body.username},function(err,foundUser){
-//     if(err){
-//       return next();
-//     }
-//       user = foundUser.username;
-//       console.log(user);
-//
-//   });
-// }
-
-//this function checks if the user is logged in or not
-function isLoggedIn(req,res,next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
+var user1 = {
+    'username': 'user1', 
+    'password': 'yikes'
 }
 
+var zipcodeInval = {
+    'address': '2525 East Mall',
+    'username':'user1',
+    'zipcode': '000000', 
+    'rooms': '4', 
+    'startDate': '05/01/2019', 
+    'endDate': '05/01/2020',
+}
+
+var roomnumInval = {
+    'address':'2250 wesbrook mall',
+    'username':'user1',
+    'zipcode': 'V6T0A6', 
+    'rooms': '-78', 
+    'startDate': '05/01/2019', 
+    'endDate': '05/01/2020',
+}
+
+var dateInval = {
+    'address':'2250 wesbrook mall',
+    'username':'user1',
+    'zipcode': 'V6T0A6', 
+    'rooms': '-78', 
+    'startDate': '13/01/2019', 
+    'endDate': '05/01/2020',
+}
+
+var mismatch = {
+    'address':'2250 wesbrook mall',
+    'username':'user1',
+    'zipcode': 'V6T2Z5', 
+    'rooms': '5', 
+    'startDate': '05/01/2019', 
+    'endDate': '05/01/2020',
+}
+
+var regularPost = {
+    'address':'2250 wesbrook mall',
+    'username':'user1',
+    'zipcode': 'V6T0A6', 
+    'rooms': '3', 
+    'startDate': '05/01/2019', 
+    'endDate': '05/01/2020',
+}
+/** 
+*Signup test: 
+*   regular signup, signup with an existing user name, signup with invalid email  
+*/
+describe ('Signup', function(){
+    it('should add a new user', function(){
+        chai.request(app).post('/register')
+            .send({'username': 'user1', 'password': 'yikes'})
+            .end(function(err, res){
+                if (err) console.log(err);
+                console.log(user1.username);
+                console.log(res.status);
+                res.should.have.status(200);
+                //expect(res.status).to.equal(200);
+                expect(res).to.be.json;
+                expect(res).to.have.status(200);
+                res.body.should.have.property('username');
+                res.body.username.should.equal('user1');
+            }); 
+    });
+    it('should check is the user already exits', function(){
+        chai.request(app).post('/signup')
+            .send({'username': 'user1', 'password': 'oops'})
+            .end(function(err, res){
+                res.should.be.json;
+                res.body.message.should.equal('Username already exits'); 
+            });
+    });
+
+    it ('should fail if user email is invalid');
+    it ('should fail if user email already exits');
+    it('should keep the user logged in');//how?
+});
+
+/**
+ * Login test: 
+ *      regular login, wrong password, non-existing username
+ */
+describe ('Login', function(){
+    describe('auth fails', function(){
+
+        it('should fail if password incorrect', function(){
+            chai.request(app).post('/login')
+            .send({'username': 'user1', 'password': 'oops'})
+            .end(function(err, res){
+                res.success.should.equal(false);
+            });
+        });
+
+        it ('shoud fail if user does not exist', function(){
+            chai.request(app).post('/login')
+                .send({'username': 'user2', 'password': 'oops'})
+                .end(function(err, res){
+                    res.success.should.equal(false);
+                });
+        });
+    });
+    // regular login
+    describe('regular login', function(){
+        it('should send back the user name and success true if auth succeed', function(){
+            chai.request(app).post('/login')
+                .send(user1)
+                .end(function(err, res){
+                    res.should.be.json;
+                    res.body.success.should.equal(true);
+                    res.body.username.should.equal('user1');
+                });
+        });
+    });
+    
+});
+
+/**
+ * Post test: 
+ *      invalid zip code, invalid room number, invalid data,
+ *      zip code and address mismatch, 
+ *      regular post
+ */
+describe('Post', function(){
+    describe('Invalid input tests', function(){
+        // invalid zipcode
+        it ('should fail if zipcode invalid', function(){
+            chai.request(app). post('/post')
+                .send(zipcodeInval)
+                .end(function(err, res){
+                    res.body.success.should.equal(false);
+                    res.body.message.send.equal('Invalid zip code');
+                });
+        });
+
+            // invalid room number
+        it('should fail if room number invalid', function(){
+            chai.request(app). post('/post')
+                .send(roomnumInval)
+                .end(function(err, res){
+                    res.body.success.should.equal(false);
+                    res.body.message.should.equal('Invalid room number');
+                });
+        });
+        
+
+        // invalid date
+        it ('should fail if data invalid', function(){
+            chai.request(app). post('/post')
+            .send(dataInval)
+            .end(function(err, res){
+                res.body.success.should.equal(false);
+                res.body.message.should.equal('Invalid room number');
+            });
+        });
+        
+    });
+    describe('mismatch fault', function(){
+        it ('should fail if address and zip code mismatch', function(){
+            chai.request(app). post('/post')
+                .send(mismatch)
+                .end(function(err, res){
+                    res.body.success.should.equal(false);
+                    res.body.message.should.equal('address and zip code mismatch');
+                });
+    });
+    });
+    
+    describe('all correct inputs', function(){
+        it ('should succeed if everything is set up correctly', function(done){
+            chai.request(app). post('/post')
+                .send(regularPost)
+                .end(function(err, res){
+                    res.body.success.should.equal(true);
+                    //res.body.message.should.equal('Invalid room number');
+                    res.body.message.should.equal('posted');
+                });
+                done();
+        });
+    });
+    
 
 
+});
+/**
+ * Search test: 
+ *      regular search
+ */
+describe ('Search', function(){
+    it('should return the relevant results');
+});
 
+describe('updata user profile', function(){
 
-//starting the server
-app.listen(5000,function(){
-    console.log("Server has started");
 });
