@@ -3,3 +3,5 @@ node_js:
   - "node"
   - "8"
 before_script: cd BackEnd/BackEnd
+services:
+  - mongodb
