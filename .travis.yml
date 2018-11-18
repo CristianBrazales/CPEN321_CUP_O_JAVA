@@ -22,4 +22,5 @@ install:
 
 script:
 - detox build --configuration ios.sim.release
+- detox build --configuration ios.sim.release
 - detox test --configuration ios.sim.release --cleanup
