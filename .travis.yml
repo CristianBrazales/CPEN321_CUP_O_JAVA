@@ -19,8 +19,8 @@ install:
 - nvm use $NODE_VERSION
 - npm install -g react-native-cli
 - npm install -g detox-cli
+- npm install
 
 script:
-- cd rental_tinder
 - detox build --configuration ios.sim.release
 - detox test --configuration ios.sim.release --cleanup
