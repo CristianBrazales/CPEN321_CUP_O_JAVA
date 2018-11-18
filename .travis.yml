@@ -10,15 +10,31 @@ env:
   - NODE_VERSION=stable
 before_install: cd rental_tinder
 install:
-- brew tap wix/brew
-- brew install applesimutils
-- curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
-- export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-- nvm install $NODE_VERSION
-- nvm use $NODE_VERSION
-- npm install -g react-native-cli
-- npm install -g detox-cli
+  - brew install yarn
+  - brew tap facebook/fb
+  - export CODE_SIGNING_REQUIRED=NO
+  - brew install fbsimctl --HEAD
+  - brew tap wix/brew
+  - brew install applesimutils --HEAD
+  - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
+  - export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+  - nvm install $NODE_VERSION
+  - nvm use $NODE_VERSION
+  - npm install -g lerna@2.0.0-rc.4 >/dev/null 2>&1
+  - npm install -g react-native-cli >/dev/null 2>&1
+  - npm install -g detox-cli >/dev/null 2>&1
+  - gem install xcpretty >/dev/null 2>&1
+  - yarn install
+
+before_script:
+  - travis_wait yarn run build:release:ios
 
 script:
-- detox build --configuration ios.sim.release
-- detox test --configuration ios.sim.release --cleanup
+  - yarn run lint
+  - yarn run detox:test:ios:release
+
+cache:
+  yarn: true
+  directories:
+    - node_modules
+    - $HOME/Library/Caches/Homebrew
