@@ -7,6 +7,7 @@ var assert = require('assert');
 var user = require('../database/users');
 var post = require('../database/posting')
 var mongoose = require('mongoose');
+var validator = require('../helperFunctions/validator');
 
 //var mgdb = mongoose.connect("mongodb://localhost:27017/unit_testing");
 describe("signup unit tests", function(){
@@ -140,7 +141,27 @@ describe("creating post unit test", function(){
 });
 
 describe("valadator test", function(){
-    it ("should check if input is validate", function(){
-        var zc = 
+    it ("should return false on invalid zipcode", function(){
+        var zc = "";
+        var valid = validator.validateZipCode(zc);
+        assert(!valid);
+    });
+
+    it ("should return true on valid zipcode", function(){
+        var zc = "V6N2Z7";
+        var valid = validator.validateZipCode(zc);
+        assert(valid);
+    });
+
+    it ("should return false if the room number is negative", function(){
+        var roomnum = -9;
+        var valid = validator.validateRoomNumber(roomnum);
+        assert(!valid);
+    });
+
+    it ("should return true if the room number is valid", function(){
+        var roomnum = 8;
+        var valid = validator.validateRoomNumber(roomnum);
+        assert(valid);
     });
 });
