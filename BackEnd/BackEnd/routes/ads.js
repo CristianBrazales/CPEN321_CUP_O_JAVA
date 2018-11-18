@@ -3,6 +3,8 @@ var router                = express.Router();
 var posting               = require("../database/posting");
 var passport              = require("passport");
 var postcode              = require('postcode-validator');
+var validator             = require("../helperFunctions/validator.js");
+
 
 
 
@@ -12,18 +14,38 @@ router.post("/posting",function(req,res){
   newPosting.address = req.body.address;
   console.log("Room number from node backend:");
   console.log(req.body.roomNumber);
-  if(req.body.roomNumber<0){
 
+  //validating room Number
+  var validRoomNumber = validator.validateRoomNumber(req.body.roomNumber);
+
+  if(!validRoomNumber){
     res.send({"success":false, "message":"Invalid room number"});
     return;
   }
+
+  // if(req.body.roomNumber<0){
+  //
+  //   res.send({"success":false, "message":"Invalid room number"});
+  //   return;
+  // }
+
+
   newPosting.roomNumber = req.body.roomNumber;
 
-  var isValidZipcode = postcode.validate(req.body.zipcode, 'CA');
-  if(!isValidZipcode) {
+
+  //validate zip code
+
+  var isValidZipcode = validator.validateZipCode(req.body.zipcode);
+    if(!isValidZipcode) {
     res.send({"success":false, "message":"Invalid zip code"});
     return;
   }
+
+  // var isValidZipcode = postcode.validate(req.body.zipcode, 'CA');
+  // if(!isValidZipcode) {
+  //   res.send({"success":false, "message":"Invalid zip code"});
+  //   return;
+  // }
 
   newPosting.zipcode = req.body.zipcode;
   newPosting.smoke = req.body.smoke;
