@@ -9,6 +9,7 @@ import { StackNavigator } from 'react-navigation';
 class LoginForm extends Component {
     constructor(props) {
         super(props);
+        // fix to jest tests
         this.state = { username: '', password: '' , test:''};
     }
     componentDidMount() {
