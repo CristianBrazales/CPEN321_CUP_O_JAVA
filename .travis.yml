@@ -22,5 +22,6 @@ install:
 - npm install -g detox-cli
 
 script:
+- cd rental_tinder
 - detox build --configuration ios.sim.release
 - detox test --configuration ios.sim.release --cleanup
