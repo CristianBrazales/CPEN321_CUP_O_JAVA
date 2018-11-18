@@ -1,6 +1,7 @@
 import React ,{ Component } from 'react';
 import {Button, Card, CardSection,  Input} from './common'
 import { View, AsyncStorage, StyleSheet, KeyboardAvoidingView, TouchableOpacity , Alert} from 'react-native';
+import {Keyboard} from 'react-native'
 const MIN_CHARACTERS = 6;
 
 class SignupForm extends Component {
@@ -79,7 +80,7 @@ class SignupForm extends Component {
                 </CardSection>
 
                 <CardSection>
-                    <Button onPress={() => this.props.navigation.navigate('signups')}>
+                    <Button onPress={() => this.props.navigation.navigate('signup')}>
                         go to profile!
                 </Button>
                 </CardSection>

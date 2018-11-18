@@ -131,13 +131,6 @@ class PostForm extends Component {
 
         if (this.state.addressValidate == true && this.state.roomNumberValidate== true) {
 
-
-
-            Alert.alert(JSON.stringify(
-                "sucess posted"
-
-            ));
-
             fetch('http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/posting', {
                 method: 'POST',
                 headers: {

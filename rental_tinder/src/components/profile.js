@@ -70,7 +70,7 @@ class profile extends Component {
 
                 <CardSection>
                         <Button onPress={() => this.props.navigation.navigate('post_screen') }>
-                    Creat a post
+                    Create a post
                 </Button>
                 </CardSection>
 
@@ -87,8 +87,13 @@ class profile extends Component {
                 </CardSection>
 
                 <CardSection>
-                        <Button onPress={this.logout}>
+                <Button onPress={this.logout}>
                     Log out
+                </Button>
+                </CardSection>
+                <CardSection>
+                <Button onPress={this.logout}>
+                   Submit!
                 </Button>
                 </CardSection>
 
