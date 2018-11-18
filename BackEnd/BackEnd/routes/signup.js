@@ -2,6 +2,7 @@ var express               = require("express");
 var router                = express.Router();
 var User                  = require("../database/users");
 var passport              = require("passport");
+var validator             = require("../helperFunctions/validator.js");
 
 router.get("/register",function(req,res){
   res.render("register");
@@ -14,6 +15,28 @@ router.post("/register",function(req,res){
     var newUser = new User({username:req.body.username});
     newUser.email = req.body.email;
     newUser.phonenumber = req.body.phonenumber;
+
+
+    //validating email
+    //console.log(validator.validateRoomNumber(-20));
+    console.log(validator.validateEmail("shafi.rpl@gmail.com"))
+    //var validEmail = validator(newUser.email);
+    //console.log("Valid email output is:"+validEmail);
+
+    // if(!validEmail){
+    //   res.send({"success":false, "message":"Email exists"});
+    //   return;
+    // }
+    User.find({'email': req.body.email},function(err,user){
+      if(err){
+        console.log(err);
+      }
+      else if(user.length>0){
+        console.log("email exits");
+        res.send({"success":false, "message":"Email exists"});
+        return;
+      }
+    });
     //trying to save the user to the database
     User.register(newUser,req.body.password,function(err,user){
         if(err){
