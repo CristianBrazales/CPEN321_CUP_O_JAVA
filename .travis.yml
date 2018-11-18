@@ -8,7 +8,7 @@ branches:
 env:
   global:
   - NODE_VERSION=stable
-before_install: cd project
+before_install: cd rental_tinder
 install:
 - brew tap wix/brew
 - brew install applesimutils
