@@ -143,7 +143,9 @@ describe ('Login', function(){
                     //res.body.success.should.equal(true);  //why thses lines dont work?
                     //console.log("res is from regular login is:"+ res.body);
                     //res.body.username.should.equal('user1');
+                    console.log("The correct user name is:"+res.body.username);
                     expect(res.body.username).to.equal('user1');
+
 
                 });
         });

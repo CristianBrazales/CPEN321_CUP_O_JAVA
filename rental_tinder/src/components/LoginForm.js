@@ -5,7 +5,6 @@ import {TextInput,  Text} from 'react-native';
 //import { Actions } from  'react-native-router-flux';
 //import SignupForm from 'SignupForm';
 import { StackNavigator } from 'react-navigation';
-import {Keyboard} from 'react-native'
 // The main pages which is shown to the user, The loginform contains two input secion (Email, Password) and two buttons (login and signup)
 class LoginForm extends Component {
     constructor(props) {
@@ -46,7 +45,7 @@ class LoginForm extends Component {
             .then((res) => {
 
                 if (res.success == true) {
-                  
+
                     var string = JSON.stringify(res.username);
 
 

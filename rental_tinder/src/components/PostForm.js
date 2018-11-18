@@ -10,9 +10,13 @@ const MAX_NUMBER = 20;
 
 class PostForm extends Component {
     // for sign in, we need the following fields
-    state = { address: '', roomNumber: '',  addressValidate: false, smoker: true,
-    drinker: false, usernameF: 'Cristian', zipcodeF: 'v6m1r9'
-    ,zipcode: '', roomNumberValidate: false, startDateTimePickerVisible: false , endDateTimePickerVisible:false, startDate: '', endDate:''};
+    constructor(props) {
+        super(props);
+        this.state = { address: '', roomNumber: '',  addressValidate: false, smoker: true,
+          drinker: false, usernameF: 'Cristian', zipcodeF: 'v6m1r9'
+          ,zipcode: '', roomNumberValidate: false, startDateTimePickerVisible: false , endDateTimePickerVisible:false, startDate: '00', endDate:'00'};
+    }
+
    // validate the address input
     validate_address (address) {
         alph = /^[a-zA-Z]+$/

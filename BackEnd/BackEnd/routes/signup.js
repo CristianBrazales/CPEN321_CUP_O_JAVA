@@ -20,12 +20,12 @@ router.post("/register",function(req,res){
           //if there is an error, prints out the error message and render the error page
             console.log(err);
             console.log(newUser);
-            res.send({"message":"error"});
+            res.send({"success":false, "message":"error"});
         }
         else{
             //else, save the user
             passport.authenticate("local")(req,res,function(){
-                res.send({"message":"successful"});
+                res.send({"success":true, "message":"successful"});
                 console.log(req.body);
                 //res.redirect("/");
             });

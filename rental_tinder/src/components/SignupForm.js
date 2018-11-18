@@ -1,11 +1,16 @@
 import React ,{ Component } from 'react';
 import {Button, Card, CardSection,  Input} from './common'
 import { View, AsyncStorage, StyleSheet, KeyboardAvoidingView, TouchableOpacity , Alert} from 'react-native';
-import {Keyboard} from 'react-native'
+//import {Keyboard} from 'react-native'
 const MIN_CHARACTERS = 6;
 
 class SignupForm extends Component {
     // for sign in, we need the following fields
+    constructor(props) {
+        super(props);
+        this.state = { userName: '', email: '', password: '', phonenumber: '', nameValidate: false, passwordValidate: false };
+
+    }
     state = { userName: '', email: '', password: '', phonenumber: '', nameValidate: false, passwordValidate: false };
    // validate the user name input
     validate_username (userName) {

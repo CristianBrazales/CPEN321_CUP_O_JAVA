@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { View, AsyncStorage, StyleSheet, KeyboardAvoidingView, TouchableOpacity, Text } from 'react-native';
 import { Button, Card, CardSection, Welcome_header } from './common';
-import { Actions } from 'react-native-router-flux';
 //import SignupForm from 'SignupForm';
 import { StackNavigator } from 'react-navigation';
 // The main pages which is shown to the user, The loginform contains two input secion (Email, Password) and two buttons (login and signup)
