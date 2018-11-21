@@ -19,7 +19,7 @@ router.post("/register",function(req,res){
 
     //validating email
     //console.log(validator.validateRoomNumber(-20));
-    console.log(validator.validateEmail("shafi.rpl@gmail.com"))
+  //  console.log(validator.validateEmail("shafi.rpl@gmail.com"))
     //var validEmail = validator(newUser.email);
     //console.log("Valid email output is:"+validEmail);
 

@@ -11,14 +11,14 @@ var validator = require('../helperFunctions/validator');
 
 //var mgdb = mongoose.connect("mongodb://localhost:27017/unit_testing");
 describe("signup unit tests", function(){
-    beforeEach(function (done) {   
+    beforeEach(function (done) {
         mongoose.connect('mongodb://localhost:27017/unit_testing', function(){
             mongoose.connection.db.dropDatabase(function(){
                 done()
-            });    
+            });
         });
     });
-    
+
     it ("should register the user", function(done){
         var newUser = new user({username: 'newuser'});
         newUser.email = "123@ubc.ca";
@@ -36,11 +36,11 @@ describe("login unit tests", function(){
     var user1 = new user({username: "user1"});
     user1.email = "123@ubc.ca";
     user1.password = "12345";
-    before(function (done) {   
+    before(function (done) {
         mongoose.connect('mongodb://localhost:27017/unit_testing', function(){
             mongoose.connection.db.dropDatabase(function(){
                 //done();
-            }); 
+            });
             user1.save().then(function(){
                 assert(user1.isNew);
             });
@@ -51,7 +51,7 @@ describe("login unit tests", function(){
         mongoose.connect('mongodb://localhost:27017/unit_testing', function(){
             mongoose.connection.db.dropDatabase(function(){
                 done()
-            });    
+            });
         });
     });
     it("should login to the account", function(){
@@ -70,11 +70,11 @@ describe("search unit tests", function(){
         smoking: true,
         cooking: true,
     });
-    before(function (done) {   
+    before(function (done) {
         mongoose.connect('mongodb://localhost:27017/unit_testing', function(){
             mongoose.connection.db.dropDatabase(function(){
                 //done();
-            }); 
+            });
             p.save().then(function(){
                 assert(p.isNew);
             });
@@ -86,7 +86,7 @@ describe("search unit tests", function(){
     //     mongoose.connect('mongodb://localhost:27017/unit_testing', function(){
     //         mongoose.connection.db.dropDatabase(function(){
     //             done()
-    //         });    
+    //         });
     //     });
     // });
 
@@ -106,18 +106,18 @@ describe("search unit tests", function(){
 });
 
 describe("creating post unit test", function(){
-    beforeEach(function (done) {   
+    beforeEach(function (done) {
         mongoose.connect('mongodb://localhost:27017/unit_testing', function(){
             mongoose.connection.db.dropDatabase(function(){
                 done()
-            });    
+            });
         });
     });
     afterEach(function(done){
         mongoose.connect('mongodb://localhost:27017/unit_testing', function(){
             mongoose.connection.db.dropDatabase(function(){
                 done()
-            });    
+            });
         });
     });
     it ("should add a new post", function(done){
