@@ -1,14 +1,19 @@
+//module declarations
 var express               = require("express");
 var router                = express.Router();
 var posting               = require("../database/posting");
 var passport              = require("passport");
 
+//this route is for advance search
 router.post("/search",function(req,res){
+  //creating variables for use in search parameter
   var zipcode = req.body.zipcode.toLowerCase();
   var earlyMorningPerson = req.body.earlyMorningPerson;
   var partyPerson = req.body.partyPerson;
   var smoking = req.body.smoking;
   console.log("Received from front end is for searching:"+req.body);
+  //trying to find posts based on search criteria, and if found, send the objects to the
+  //front end
   posting.find({$and:[{"zipcode":zipcode},{"earlyMorningPerson":earlyMorningPerson},
   {"partyPerson":partyPerson},{"smoking":smoking}]}, function(err,foundPosting){
     if(err) {
@@ -25,8 +30,11 @@ router.post("/search",function(req,res){
 router.post("/regex",function(req,res){
   console.log(req.body.zipcode);
   if(1){
-    var regex = new RegExp(req.body.zipcode, 'gi');
+    //creating search parameter for our regex search
+    var regex = new RegExp(req.body.zipcode.toLowerCase(), 'gi');
     console.log("The query is: " + regex);
+    //trying to search the database based on the parameter, and if found, send the objects,
+    //otherwise, send error message
     posting.find({zipcode:regex},function(err,foundPosting){
         if(err){
             console.log(err);
@@ -41,7 +49,7 @@ router.post("/regex",function(req,res){
 });
 
 } else{
-  var regex = new RegExp(req.body.zipcode, 'gi');
+  var regex = new RegExp(req.body.zipcode.toLowerCase(), 'gi');
   console.log("The query is: " + regex);
   res.send("nothing found");
 }
