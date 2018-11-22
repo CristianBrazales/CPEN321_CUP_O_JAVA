@@ -47,7 +47,7 @@ router.post("/posting",function(req,res){
   //   return;
   // }
 
-  newPosting.zipcode = req.body.zipcode;
+  newPosting.zipcode = req.body.zipcode.toLowerCase();
   newPosting.smoke = req.body.smoke;
   newPosting.earlyMorningPerson = req.body.earlyMorningPerson;
   newPosting.partyPerson = req.body.partyPerson;
