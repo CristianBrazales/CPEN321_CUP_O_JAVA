@@ -8,6 +8,7 @@ router.post("/search",function(req,res){
   var earlyMorningPerson = req.body.earlyMorningPerson;
   var partyPerson = req.body.partyPerson;
   var smoking = req.body.smoking;
+  console.log("Received from front end is for searching:"+req.body);
   posting.find({$and:[{"zipcode":zipcode},{"earlyMorningPerson":earlyMorningPerson},
   {"partyPerson":partyPerson},{"smoking":smoking}]}, function(err,foundPosting){
     if(err) {
