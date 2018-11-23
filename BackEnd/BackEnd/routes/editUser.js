@@ -23,20 +23,24 @@ router.post("/user",function(req,res){
 
 //updating the user profile
 router.post("/user/edit",function(req,res){
+  //trying to find the user
   User.findOne({'username':req.body.username},function(err,foundUser){
     if(err){
       console.log(err);
-      res.send({"success":false,"message":"Err in findOne function"});
+      res.send({"success":false,"message":"User doesn't exist"});
       return;
     }
+    //setting the password for the user
     foundUser.setPassword(req.body.password,function(err){
       if(err){
         console.log(err);
         res.send({"success":false, "message": "Reset password failed"});
         return;
       }
+      //editing other parameters for the user
       foundUser.email = req.body.email;
       foundUser.phonenumber = req.body.phonenumber;
+      //saving the edited user
       foundUser.save();
       res.send({"success": true, "message": "Successfully updated user"});
       return;

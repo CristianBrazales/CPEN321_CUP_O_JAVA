@@ -46,7 +46,7 @@ router.post("/register",function(req,res){
           //if there is an error, prints out the error message and render the error page
             console.log(err);
             console.log(newUser);
-            res.send({"success":false, "message":"error"});
+            res.send({"success":false, "message":err});
         }
         else{
             //else, save the user
