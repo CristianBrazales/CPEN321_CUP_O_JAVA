@@ -1,9 +1,11 @@
 //module declarations
-var express             = require("express");
-var router              = express.Router();
+var express               = require("express");
+var router                = express.Router();
 var bodyParser            = require("body-parser");
 var nodemailer            = require("nodemailer");
 var User                  = require("../database/users");
+var xoauth2               = require('xoauth2');
+
 var email;
 
 router.post("/email",function(req,res){
@@ -30,19 +32,46 @@ User.findOne({'username':req.body.username},function(err,foundUser){
   <p>${req.body.message}</p>`;
 
   //nodemailer stuff
-  var transporter = nodemailer.createTransport({
-        host: 'smtp.mail.com',
-        port: 587,
-        secure: false, // true for 465, false for other ports
-        auth: {
-            user: 'cpen321@mail.com', // generated ethereal user
-            pass: 'Cpen321@' // generated ethereal password
-        }
-        // pool: true, // use pooled connection
-        // rateLimit: true, // enable to make sure we are limiting
-        // maxConnections: 1, // set limit to 1 connection only
-        // maxMessages: 3 // send 3 emails per second
-    });
+  // var transporter = nodemailer.createTransport({
+  //       host: 'smtp.mail.com',
+  //       port: 587,
+  //       secure: false, // true for 465, false for other ports
+  //       auth: {
+  //           user: 'cpen321cuopjava@gmail.com', // generated ethereal user
+  //           pass: 'Cpen321@' // generated ethereal password
+  //       }
+  //       // pool: true, // use pooled connection
+  //       // rateLimit: true, // enable to make sure we are limiting
+  //       // maxConnections: 1, // set limit to 1 connection only
+  //       // maxMessages: 3 // send 3 emails per second
+  //   });
+
+  //gmail setup
+//   var transporter = nodemailer.createTransport({
+//     service: 'gmail',
+//     auth: {
+//         xoauth2: xoauth2.createXOAuth2Generator({
+//             user: 'cpen321cuopjava@gmail.com',
+//             clientId: '575996118971-1avb3d7pg42jo9jo16gl9ruqf5pisbs7.apps.googleusercontent.com',
+//             clientSecret: 'IbUs2CSjAFC3OG2wXX9jX2XQ',
+//             refreshToken: '1/h02ispN6KLRrvZAqYBesvkKGxdMkuDK_3XzS-XTFsrFCVXRiKCMPKKW6tI7MU9bn'
+//         })
+//     }
+// });
+
+let transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+        type: 'OAuth2',
+        user: 'cpen321cuopjava@gmail.com',
+        clientId: '575996118971-1avb3d7pg42jo9jo16gl9ruqf5pisbs7.apps.googleusercontent.com',
+        clientSecret: 'IbUs2CSjAFC3OG2wXX9jX2XQ',
+        refreshToken: '1/h02ispN6KLRrvZAqYBesvkKGxdMkuDK_3XzS-XTFsrFCVXRiKCMPKKW6tI7MU9bn',
+        accessToken: 'ya29.GlteBlifatkp9KB42kxWege4Vgm7CH9KPkdiVSraLt-OAM9xZRWgDFVxMoRZM0XOXz3KDIHpQ3O9meGpuL2nD_r361a4FVemdG0gdeg9C4xkm80FMkvWrJHOvmgH'
+    }
+});
 
     // setup email data with unicode symbols
     console.log(email);
