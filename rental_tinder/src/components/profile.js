@@ -6,6 +6,18 @@ import { Button, Card, CardSection, Welcome_header } from './common';
 import { StackNavigator } from 'react-navigation';
 // The main pages which is shown to the user, The loginform contains two input secion (Email, Password) and two buttons (login and signup)
 var welcome_message = 'Welcome';
+function findAndReplace_2(string, target, replacement) {
+
+var i = 0, length = string.length;
+
+for (i; i < length; i++) {
+
+ string = string.replace(target, replacement);
+
+}
+return string;
+
+}
 class profile extends Component {
     constructor(props) {
         super(props);
@@ -24,7 +36,7 @@ class profile extends Component {
         this._mounted = false
     }
     search = () => {
-        alert( AsyncStorage.getItem('user'));
+      this.props.navigation.navigate('search');
 
 
     }
@@ -42,11 +54,12 @@ class profile extends Component {
         //username => this.setState({ username: user})
 
         try {
-            var value = await AsyncStorage.getItem('username');
+            var val = await AsyncStorage.getItem('username');
+            var det = findAndReplace_2(val, "\"","");
+              AsyncStorage.setItem('username',det);
+                this.setState({ username: det})
 
-                this.setState({ username: value})
-
-            if (value !== null) {
+            if (val!== null) {
                 // We have data!!
                 console.log(value);
             }
@@ -69,30 +82,30 @@ class profile extends Component {
 
                 <CardSection>
                         <Button onPress={() => this.props.navigation.navigate('post_screen') }>
-                    Create a post
+                    Post your place!
+                </Button>
+                </CardSection>
+                <CardSection>
+                        <Button onPress={this.search}>
+                        advance search!
                 </Button>
                 </CardSection>
 
                 <CardSection>
                         <Button onPress={this.search}>
-                    Search a post
+                    Look for a place (advance search)!
                 </Button>
                 </CardSection>
 
                 <CardSection>
                 <Button>
-                    Manage my post
+                    Manage my posts
                 </Button>
                 </CardSection>
 
                 <CardSection>
                 <Button onPress={this.logout}>
-                    Log out
-                </Button>
-                </CardSection>
-                <CardSection>
-                <Button onPress={this.logout}>
-                   Submit!
+                    Log out!
                 </Button>
                 </CardSection>
 

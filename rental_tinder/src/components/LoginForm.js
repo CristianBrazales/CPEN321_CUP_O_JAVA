@@ -49,13 +49,13 @@ class LoginForm extends Component {
 
                     var string = JSON.stringify(res.username);
 
-
+                  
                     AsyncStorage.setItem('username', string);
-                    () => this.props.navigation.navigate('profile');
+                     this.props.navigation.navigate('profile');
                 }
                 else {
                     alert(res.message);
-                      () =>this.props.navigation.navigate('login');
+                      this.props.navigation.navigate('login');
 
                 }
             }).catch((error) => {

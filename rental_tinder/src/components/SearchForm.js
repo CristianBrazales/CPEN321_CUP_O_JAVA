@@ -4,7 +4,7 @@ import {Switch, View, Text, StyleSheet} from 'react-native';
 
 class SearchForm extends Component{
 
-    state = { zipcode: '',earlyMorningPerson:false, partyPerson:false, smoking:false };
+    state = { zipcode: '',earlyMorningPerson:false, partyPerson:false, smoking:false, info:[] };
 
     ChangeState_morning = () =>this.setState(state =>({
             earlyMorningPerson: !state.earlyMorningPerson
@@ -13,10 +13,15 @@ class SearchForm extends Component{
     ChangeState_party = () =>this.setState(state =>({
         partyPerson: !state.partyPerson
     }));
-    
+
     ChangeState_smoking = () =>this.setState(state =>({
         smoking: !state.smoking
     }));
+
+    readinfo(){
+        return this.state.info.map(info =><Text>{info.address}</Text>);
+    }
+
     render(){
         return(
             <Card>
@@ -29,6 +34,13 @@ class SearchForm extends Component{
                     />
                 </CardSection>
 
+
+
+                <CardSection>
+                <View style={styles.container} >
+                <Text style={styles.paragraph}>Please enter your roommate preferences:</Text>
+                </View>
+                </CardSection>
 
                 <CardSection>
                 <View style={styles.container}>
@@ -62,6 +74,9 @@ class SearchForm extends Component{
                </View>
                </CardSection>
 
+                <CardSection>
+                    {this.readinfo()}
+                </CardSection>
 
                 <CardSection>
                 <Button onPress={this.handlePress_search.bind(this)}>
@@ -74,8 +89,9 @@ class SearchForm extends Component{
     }
 
 
-    handlePress_search = async () => {
 
+    handlePress_search = async () => {
+//http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/search
 
             fetch('http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/search', {
                 method: 'POST',
@@ -83,23 +99,28 @@ class SearchForm extends Component{
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
                 body:'zipcode='+ this.state.zipcode
-               
-              + '&earlyMorningPerson='+this.state.earlyMorningPerson+ '&partyPerson=' +this.state.partyPerson+ '&smoking =' +this.state.smoking
+
+              + '&earlyMorningPerson='+this.state.earlyMorningPerson
+              + '&partyPerson=' +this.state.partyPerson+ '&smoking =' +this.state.smoking
             }).then((response) => response.json())
             .then((res) => {
 
                 if (res.success == true){
-
-                  alert(res.message);
+                //  this.setState({info: res.message});
+                  //alert(res.success);
+                  this.props.navigation.navigate('tmppage',{
+                    itemId: 86,
+                    otherParam: res.message,
+                  });
                 }
                 if (res.success == false){
 
-                  alert(res.message);
+                  alert("faild");
                 }
                 }).catch((error) => {
                     alert("Something goes wrong");
         }).done();
-     
+
     };
 
 }
@@ -116,7 +137,7 @@ const styles = StyleSheet.create({
       paddingLeft: 5,
       flex: 1
     },
-}); 
+});
 
 
 

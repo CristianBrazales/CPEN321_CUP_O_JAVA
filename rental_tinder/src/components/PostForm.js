@@ -1,25 +1,60 @@
 import React ,{ Component } from 'react';
 import {Button, Card, CardSection,  Input} from './common'
 import {Alert} from 'react-native';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View,Switch, StyleSheet,AsyncStorage} from 'react-native';
+
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
 
 const MIN_CHARACTERS = 6;
 const MAX_NUMBER = 20;
+function findAndReplace(string, target, replacement) {
 
+var i = 0, length = string.length;
+
+for (i; i < length; i++) {
+
+ string = string.replace(target, replacement);
+
+}
+
+return string;
+
+}
 class PostForm extends Component {
+
     // for sign in, we need the following fields
     constructor(props) {
         super(props);
-        this.state = { address: '', roomNumber: '',  addressValidate: false, smoker: true,
-          drinker: false, usernameF: 'Cristian', zipcodeF: 'v6m1r9'
-          ,zipcode: '', roomNumberValidate: false, startDateTimePickerVisible: false , endDateTimePickerVisible:false, startDate: '00', endDate:'00'};
+        this.state = { address: '', roomNumber: '', title: '', addressValidate: false, zipcode: '', username: '',
+         earlyMorningPerson:false, partyPerson:false, smoking:false,
+         roomNumberValidate: false, startDateTimePickerVisible: false , endDateTimePickerVisible:false,
+        startDate: '00', endDate:'00'};
+    }
+    componentDidMount() {
+        this._loadInitialState().done();
+    }
+    _loadInitialState = async () => {
+        var value = (await AsyncStorage.getItem('username'));
+        //var  details = findAndReplace(value, "\"","");
+          this.setState({ username: value, })
     }
 
+
+    ChangeState_morning = () =>this.setState(state =>({
+            earlyMorningPerson: !state.earlyMorningPerson
+    }));
+
+    ChangeState_party = () =>this.setState(state =>({
+        partyPerson: !state.partyPerson
+    }));
+
+    ChangeState_smoking = () =>this.setState(state =>({
+        smoking: !state.smoking
+    }));
    // validate the address input
     validate_address (address) {
-        alph = /^[a-zA-Z]+$/
+        alph = /^\d+\s[A-z]+\s[A-z]+/
         if (alph.test(address) && address.length > MIN_CHARACTERS) {
             this.setState({ addressValidate: true, })
         } else {
@@ -58,6 +93,15 @@ class PostForm extends Component {
     render(){
         return(
             <Card>
+              <CardSection>
+                  <Input
+                    placeholder = "Title of the place"
+                    label ="Title:"
+                    value={this.state.title}
+                    onChangeText={title => this.setState({ title})}
+
+                    />
+                </CardSection>
                 <CardSection>
                     <Input
                     placeholder = "please enter address"
@@ -65,7 +109,7 @@ class PostForm extends Component {
                     value={this.state.address}
                         onChangeText={address => this.setState({ address })}
 
-            />
+                    />
                 </CardSection>
 
                 <CardSection>
@@ -86,6 +130,43 @@ class PostForm extends Component {
                     />
                 </CardSection>
 
+                <CardSection>
+                <View style={styles.container} >
+                <Text style={styles.paragraph}>Please enter your teenant preferences:</Text>
+                </View>
+                </CardSection>
+
+                <CardSection>
+                <View style={styles.container}>
+                <Text style={styles.paragraph}>Morning Person:</Text>
+               <Switch
+                    onValueChange={this.ChangeState_morning}
+                    value={this.state.earlyMorningPerson}
+               />
+               </View>
+               </CardSection>
+
+
+                <CardSection>
+                <View style={styles.container}>
+                <Text style={styles.paragraph}>Party Person:</Text>
+               <Switch
+                    onValueChange={this.ChangeState_party}
+                    value={this.state.partyPerson}
+               />
+               </View>
+               </CardSection>
+
+
+                <CardSection>
+                <View style={styles.container}>
+                <Text style={styles.paragraph}>Smoking Person:</Text>
+               <Switch
+                    onValueChange={this.ChangeState_smoking}
+                    value={this.state.smoking}
+               />
+               </View>
+               </CardSection>
 
                 <CardSection>
                 <View style={{ flex: 1 ,justifyContent: 'center',alignItems: 'center' }}>
@@ -140,13 +221,18 @@ class PostForm extends Component {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body:'username='+ this.state.usernameF
+                body:'username='+ this.state.username
                 + '&address=' + this.state.address + '&roomNumber=' + this.state.roomNumber
-                + '&zipcode='+ this.state.zipcode  + '&smoke='+this.state.smoker+ '&partyPerson=' +this.state.drinker
+                + '&zipcode='+ this.state.zipcode  + '&smoke='+this.state.smoking+ '&partyPerson='
+                +this.state.partyPerson + '&earlyMorningPerson='+ this.state.earlyMorningPerson
             }).then((response) => response.json())
             .then((res) => {
 
                 if (res.success == true){
+                console.warn('username='+ this.state.username
+                + '&address=' + this.state.address + '&roomNumber=' + this.state.roomNumber
+                + '&zipcode='+ this.state.zipcode  + '&smoke='+this.state.smoking+ '&partyPerson='
+                +this.state.partyPerson + '&earlyMorningPerson='+ this.state.earlyMorningPerson);
 
                   alert(res.message);
                 }
@@ -162,12 +248,12 @@ class PostForm extends Component {
         else {
             if (this.state.addressValidate == false && this.state.roomNumberValidate == false) {
                 Alert.alert(JSON.stringify(
-                    "please enter valid address and room number"
+                    "Please enter valid address and room number"
 
                 ));
             } else if(this.state.addressValidate == false) {
                 Alert.alert(JSON.stringify(
-                    "please check the address (at least 6 characters)"
+                    "Please enter valid address"
 
                 ));
             }
@@ -184,6 +270,19 @@ class PostForm extends Component {
     };
 
 }
+const styles = StyleSheet.create({
+    container:{
+        height: 40,
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    paragraph:{
+        fontSize: 19,
+      paddingLeft: 5,
+      flex: 1
+    },
+});
 
 
 export default PostForm;
