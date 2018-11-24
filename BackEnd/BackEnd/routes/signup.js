@@ -1,3 +1,4 @@
+//module declarations
 var express               = require("express");
 var router                = express.Router();
 var User                  = require("../database/users");
@@ -27,6 +28,8 @@ router.post("/register",function(req,res){
     //   res.send({"success":false, "message":"Email exists"});
     //   return;
     // }
+
+    //check to see if the email exists, and if so, send an error message
     User.find({'email': req.body.email},function(err,user){
       if(err){
         console.log(err);
@@ -43,7 +46,7 @@ router.post("/register",function(req,res){
           //if there is an error, prints out the error message and render the error page
             console.log(err);
             console.log(newUser);
-            res.send({"success":false, "message":"error"});
+            res.send({"success":false, "message":err});
         }
         else{
             //else, save the user

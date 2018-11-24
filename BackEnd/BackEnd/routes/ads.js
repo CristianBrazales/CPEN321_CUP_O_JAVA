@@ -1,3 +1,4 @@
+//module declarations
 var express               = require("express");
 var router                = express.Router();
 var posting               = require("../database/posting");
@@ -47,12 +48,14 @@ router.post("/posting",function(req,res){
   //   return;
   // }
 
-  newPosting.zipcode = req.body.zipcode;
+  //creating an object for search query
+  newPosting.zipcode = req.body.zipcode.toLowerCase();
   newPosting.smoke = req.body.smoke;
   newPosting.earlyMorningPerson = req.body.earlyMorningPerson;
   newPosting.partyPerson = req.body.partyPerson;
   //trying to post this data to the database
   posting.create(newPosting,function(err,returnedRoom){
+    //error handling
     if(err){
       //console.log(err);
       res.send({"success":false, "message": "Error parsing data to database"});
@@ -60,6 +63,7 @@ router.post("/posting",function(req,res){
     }
     else{
       // res.send(returnedCar);
+      //if no error, let front end know that the post was successful
       res.send({"success":true, "message": "Successfully created a post"});
       return;
     }

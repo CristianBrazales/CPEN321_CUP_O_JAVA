@@ -10,6 +10,7 @@ var postingSchema = new mongoose.Schema({
     roomNumber: Number,
     earlyMorningPerson: Boolean,
     partyPerson: Boolean,
+    title: String,
     zipcode: String,
     smoke: Boolean,
     cooking: String,
