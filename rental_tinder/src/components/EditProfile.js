@@ -5,7 +5,7 @@ const MIN_CHARACTERS = 6;
 
 class EditProfile extends Component{
 
-    state = { newemail: '', newpassword: '', newphonenumber: '', passwordValidate: false };
+    state = { username:'', newemail: '', newpassword: '', newphonenumber: '', passwordValidate: false, info:[] };
 
     validate_password  (newpassword){
         if (newpassword.length >= MIN_CHARACTERS) {
@@ -15,13 +15,28 @@ class EditProfile extends Component{
             }
     }
 
+    getdata = async () =>{
+        const { navigation } = this.props;
+        const name = navigation.getParam('name', 'NO-ID');
+        const otherParam = navigation.getParam('otherParam', 'some default value');
+        this.setState({info: otherParam});
+        this.setState({username:name});
+    }
+
+    componentDidMount(){
+        this.getdata().done();
+    }
+
+
     render(){
+
+      const { email, password, phonenumber } = this.state.info;
         return(
             <Card>
 
                 <CardSection>
                     <Input
-                    placeholder = "user@gmail.com"
+                    placeholder = {email}
                     label ="New Email:"
                     value={this.state.newemail}
                     onChangeText={newemail =>this.setState({newemail})}
@@ -33,7 +48,7 @@ class EditProfile extends Component{
                 <CardSection>
                     <Input
                         secureTextEntry
-                        placeholder ="At least 6 characters (only characters)"
+                        placeholder ="At lease 6 characters"
                         label= "New Password:"
                         value={this.state.newpassword}
                         onChangeText={newpassword => this.setState({ newpassword })}
@@ -44,8 +59,8 @@ class EditProfile extends Component{
 
                 <CardSection>
                     <Input
-                    placeholder = "123-4567890"
-                    label ="New Phonenum:"
+                    placeholder = {phonenumber}
+                    label ="New Phone"
                     value={this.state.newphonenumber}
                     onChangeText={newphonenumber =>this.setState({newphonenumber})}
                     />
@@ -63,31 +78,36 @@ class EditProfile extends Component{
 
     handlePress_edit_profile = async () => {
         // upon submit first check the inputs, on sucess send the data
-        await  this.validate_password(this.state.password)
+        await  this.validate_password(this.state.newpassword)
 
         if (this.state.passwordValidate == true) {
 
-            Alert.alert(JSON.stringify(
-                "Sucess log in, please "
+          fetch('http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/user/edit', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded',
+              },
+              body:'username=' + this.state.username + '&password=' + this.state.newpassword
+                    + '&email=' +this.state.newemail +'&phonenumber=' + this.state.newphonenumber
+          }).then((response) => response.json())
+          .then((res) => {
 
-            ));
+              if (res.success == true){
 
-            fetch('http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: 'password=' + this.state.newpassword + '&email=' + this.state.newemail + '&phonenumber=' + this.state.newphonenumber
-            })
-                .catch(error => console.error('Error:', error));
-            this.props.navigation.navigate('login');
+                alert("Success!");
+                this.props.navigation.navigate('profile');
+              }
+              if (res.success == false){
+
+                alert("faild");
+              }
+              }).catch((error) => {
+                  alert("Something goes wrong");
+        }).done();
         }
         // look for the error
         else {
-            Alert.alert(JSON.stringify(
-                "please check the  password (at least 6 characters)"
-
-            ));
+          alert("The password has to be at least 6 characters");
         }
     }
 

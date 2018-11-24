@@ -40,6 +40,36 @@ class profile extends Component {
 
 
     }
+
+    changeprofile = async () =>{
+      //  this.props.navigation.navigate('editprofile');
+
+                  fetch('http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/user', {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/x-www-form-urlencoded',
+                      },
+                     body:'username=' + this.state.username
+                  }).then((response) => response.json())
+                  .then((res) => {
+
+                      if (res.success == true){
+                      //  this.setState({info: res.message});
+                        //alert(res.success);
+                        this.props.navigation.navigate('editprofile',{
+                          name: this.state.username,
+                          otherParam: res.message,
+                        });
+                      }
+                      if (res.success == false){
+
+                        alert("faild");
+                      }
+                      }).catch((error) => {
+                          alert("Something goes wrong");
+              }).done();
+    }
+
     logout = () => {
         AsyncStorage.removeItem('user');
         this.props.navigation.navigate('login');
@@ -100,6 +130,12 @@ class profile extends Component {
                 <CardSection>
                 <Button>
                     Manage my posts
+                </Button>
+                </CardSection>
+
+                <CardSection>
+                <Button onPress={this.changeprofile.bind(this)}>
+                      Change my profile!
                 </Button>
                 </CardSection>
 
