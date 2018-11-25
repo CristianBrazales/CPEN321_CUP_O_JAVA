@@ -4,8 +4,13 @@ import {Alert} from 'react-native';
 import { Text, TouchableOpacity, View,Switch, StyleSheet,AsyncStorage} from 'react-native';
 
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import {
+  AppRegistry,
+  Image,
+  PixelRatio,
 
-
+} from 'react-native';
+import ImagePicker from 'react-native-image-picker';
 const MIN_CHARACTERS = 6;
 const MAX_NUMBER = 20;
 function findAndReplace(string, target, replacement) {
@@ -29,7 +34,9 @@ class PostForm extends Component {
         this.state = { address: '', roomNumber: '', title: '', addressValidate: false, zipcode: '', username: '',
          earlyMorningPerson:false, partyPerson:false, smoking:false,
          roomNumberValidate: false, startDateTimePickerVisible: false , endDateTimePickerVisible:false,
-        startDate: '00', endDate:'00'};
+        startDate: '00', endDate:'00', avatarSource: null,videoSource: null, imagepost: '', description:''};
+        this.selectPhotoTapped = this.selectPhotoTapped.bind(this);
+        this.selectVideoTapped = this.selectVideoTapped.bind(this);
     }
     componentDidMount() {
         this._loadInitialState().done();
@@ -89,6 +96,65 @@ class PostForm extends Component {
     this.setState({endDate: date})
     this.hideEndDateTimePicker();
   };
+  // functions
+  selectPhotoTapped() {
+   const options = {
+     quality: 1.0,
+     maxWidth: 500,
+     maxHeight: 500,
+     storageOptions: {
+       skipBackup: true,
+     },
+   };
+
+   ImagePicker.showImagePicker(options, (response) => {
+     console.log('Response = ', response);
+
+     if (response.didCancel) {
+       console.log('User cancelled photo picker');
+     } else if (response.error) {
+       console.log('ImagePicker Error: ', response.error);
+     } else if (response.customButton) {
+       console.log('User tapped custom button: ', response.customButton);
+     } else {
+    //   let source = { uri: response.uri };
+
+       // You can also display the image using data:
+        let source = { uri: 'data:image/jpeg;base64,' + response.data };
+        console.warn(response.data);
+        let tes=JSON.stringify(response.data);
+       this.setState({
+         imagepost: tes,
+         avatarSource: source,
+       });
+     }
+   });
+ }
+
+ selectVideoTapped() {
+   const options = {
+     title: 'Video Picker',
+     takePhotoButtonTitle: 'Take Video...',
+     mediaType: 'video',
+     videoQuality: 'medium',
+   };
+
+   ImagePicker.showImagePicker(options, (response) => {
+     console.log('Response = ', response);
+
+     if (response.didCancel) {
+       console.log('User cancelled video picker');
+     } else if (response.error) {
+       console.log('ImagePicker Error: ', response.error);
+     } else if (response.customButton) {
+       console.log('User tapped custom button: ', response.customButton);
+     } else {
+       this.setState({
+         videoSource: response.uri,
+       });
+     }
+   });
+ }
 
     render(){
         return(
@@ -127,6 +193,14 @@ class PostForm extends Component {
                     label =" Zipcode:"
                     value={this.state.zipcode}
                     onChangeText={zipcode =>this.setState({zipcode})}
+                    />
+                </CardSection>
+                <CardSection>
+                    <Input
+                    placeholder = "Description"
+                    label =" Description:"
+                    value={this.state.description}
+                    onChangeText={  description=>this.setState({description})}
                     />
                 </CardSection>
 
@@ -168,33 +242,28 @@ class PostForm extends Component {
                </View>
                </CardSection>
 
-                <CardSection>
-                <View style={{ flex: 1 ,justifyContent: 'center',alignItems: 'center' }}>
-                <TouchableOpacity onPress={this.showStartDateTimePicker}>
-                  <Text style={{fontSize:20,color: '#007aff'}}>Set start date</Text>
-                 </TouchableOpacity>
-                  <DateTimePicker
-                  isVisible={this.state.startDateTimePickerVisible}
-                  onConfirm={this.handleStartDatePicked}
-                   onCancel={this.hideStartDateTimePicker}
-                  />
-                 </View>
-                </CardSection>
 
-                <CardSection>
-                <View style={{ flex: 1 ,justifyContent: 'center',alignItems: 'center' }}>
-                <TouchableOpacity onPress={this.showEndDateTimePicker}>
-                  <Text style={{fontSize:20,color: '#007aff'}}>Set end date</Text>
-                 </TouchableOpacity>
-                  <DateTimePicker
-                  isVisible={this.state.endDateTimePickerVisible}
-                  onConfirm={this.handleEndDatePicked}
-                   onCancel={this.hideEndDateTimePicker}
-                  />
-                 </View>
-                </CardSection>
+<CardSection>
+                <View style={styles.container_2}>
+     <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
+       <View
+         style={[
+           styles.avatar,
+           styles.avatarContainer,
+           { marginBottom: 20 },
+         ]}
+       >
+         {this.state.avatarSource === null ? (
+           <Text>Select a Photo</Text>
+         ) : (
+           <Image style={styles.avatar} source={this.state.avatarSource} />
+         )}
+       </View>
+     </TouchableOpacity>
 
 
+   </View>
+   </CardSection>
                 <CardSection>
                 <Button onPress={this.handlePress_create_post.bind(this)}>
                    Post!
@@ -225,24 +294,21 @@ class PostForm extends Component {
                 + '&address=' + this.state.address + '&roomNumber=' + this.state.roomNumber
                 + '&zipcode='+ this.state.zipcode  + '&smoke='+this.state.smoking+ '&partyPerson='
                 +this.state.partyPerson + '&earlyMorningPerson='+ this.state.earlyMorningPerson
+                + '&photo='+(this.state.imagepost)+'&title='+this.state.title+ '&description='+this.state.description
             }).then((response) => response.json())
             .then((res) => {
 
                 if (res.success == true){
-                console.warn('username='+ this.state.username
-                + '&address=' + this.state.address + '&roomNumber=' + this.state.roomNumber
-                + '&zipcode='+ this.state.zipcode  + '&smoke='+this.state.smoking+ '&partyPerson='
-                +this.state.partyPerson + '&earlyMorningPerson='+ this.state.earlyMorningPerson);
-
-                  alert("Success!");
-                  this.props.navigation.navigate('profile');
+              //console.warn(this.state.avatarSource)
+              console.warn("SUCcce ")
+                  alert(res.message);
                 }
                 if (res.success == false){
-
+                      console.warn("backend ")
                   alert(res.message);
                 }
                 }).catch((error) => {
-                    alert("please, check the password and username");
+                    alert(error);
         }).done();
       }
         // look for the error
@@ -271,19 +337,36 @@ class PostForm extends Component {
     };
 
 }
+
+
 const styles = StyleSheet.create({
-    container:{
-        height: 40,
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    paragraph:{
-        fontSize: 19,
-      paddingLeft: 5,
-      flex: 1
-    },
+  container_2: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  avatarContainer: {
+    borderColor: '#9B9B9B',
+    borderWidth: 1 / PixelRatio.get(),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  avatar: {
+    borderRadius: 75,
+    width: 150,
+    height: 150,
+  },
+  paragraph:{
+      fontSize: 19,
+    paddingLeft: 5,
+    flex: 1
+  },
+  container:{
+    height: 40,
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center'
+},
 });
-
-
 export default PostForm;
