@@ -33,6 +33,8 @@ router.post("/edit/post",function(req,res){
     foundPosting.partyPerson = req.body.partyPerson;
     foundPosting.smoke = req.body.smoke;
     foundPosting.title = req.body.title;
+    foundPosting.photo = req.body.photo;
+    foundPosting.description = req.body.description;
 
     foundPosting.save();
     res.send({"success":true, "message":"Successfully updated post"});

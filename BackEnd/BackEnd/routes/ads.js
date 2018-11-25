@@ -54,6 +54,8 @@ router.post("/posting",function(req,res){
   newPosting.earlyMorningPerson = req.body.earlyMorningPerson;
   newPosting.partyPerson = req.body.partyPerson;
   newPosting.title = req.body.title;
+  newPosting.photo = req.body.photo;
+  newPosting.description = req.body.description;
   //trying to post this data to the database
   posting.create(newPosting,function(err,returnedRoom){
     //error handling
