@@ -5,6 +5,8 @@ var posting               = require("../database/posting");
 var passport              = require("passport");
 var postcode              = require('postcode-validator');
 var validator             = require("../helperFunctions/validator.js");
+var escapeStringRegexp    = require('escape-string-regexp');
+
 
 
 
