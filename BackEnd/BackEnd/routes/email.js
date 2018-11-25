@@ -68,8 +68,9 @@ let transporter = nodemailer.createTransport({
         user: 'cpen321cuopjava@gmail.com',
         clientId: '575996118971-1avb3d7pg42jo9jo16gl9ruqf5pisbs7.apps.googleusercontent.com',
         clientSecret: 'IbUs2CSjAFC3OG2wXX9jX2XQ',
-        refreshToken: '1/h02ispN6KLRrvZAqYBesvkKGxdMkuDK_3XzS-XTFsrFCVXRiKCMPKKW6tI7MU9bn',
-        accessToken: 'ya29.GlteBlifatkp9KB42kxWege4Vgm7CH9KPkdiVSraLt-OAM9xZRWgDFVxMoRZM0XOXz3KDIHpQ3O9meGpuL2nD_r361a4FVemdG0gdeg9C4xkm80FMkvWrJHOvmgH'
+        refreshToken: '1/yGYdP_4Z3etIYXGdSYSnc-MGVAj3_F0SufAUs9ARPOQ',
+        accessToken: 'ya29.GltfBrPBgy2AMcEiTKGa0QcnL4teWgwTkGvar3GWPcQJYhmSH8b6GuWbUb4MAYigecDFmZ5T_Vvq-eDqyn_nvJB2YCFy9SKMn0y5Mkm-MH933sKAuyKz2_FozUcv',
+        expires: 1
     }
 });
 
@@ -88,7 +89,8 @@ let transporter = nodemailer.createTransport({
 
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-            return console.log(error);
+             console.log(error);
+             res.send(error);
         }
         console.log('Message sent: %s', info.messageId);
         // Preview only available when sending through an Ethereal account
