@@ -37,8 +37,6 @@ class profile extends Component {
     }
     search = () => {
       this.props.navigation.navigate('search');
-
-
     }
 
     changeprofile = async () =>{
@@ -57,6 +55,35 @@ class profile extends Component {
                       //  this.setState({info: res.message});
                         //alert(res.success);
                         this.props.navigation.navigate('editprofile',{
+                          name: this.state.username,
+                          otherParam: res.message,
+                        });
+                      }
+                      if (res.success == false){
+
+                        alert("faild");
+                      }
+                      }).catch((error) => {
+                          alert("Something goes wrong");
+              }).done();
+    }
+
+    managepost = async () =>{
+      //  this.props.navigation.navigate('editprofile');
+
+                  fetch('http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/posts', {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/x-www-form-urlencoded',
+                      },
+                     body:'username=' + this.state.username
+                  }).then((response) => response.json())
+                  .then((res) => {
+
+                      if (res.success == true){
+                      //  this.setState({info: res.message});
+                        //alert(res.success);
+                        this.props.navigation.navigate('managepost',{
                           name: this.state.username,
                           otherParam: res.message,
                         });
@@ -128,7 +155,7 @@ class profile extends Component {
                 </CardSection>
 
                 <CardSection>
-                <Button>
+                <Button onPress={this.managepost.bind(this)}>
                     Manage my posts
                 </Button>
                 </CardSection>

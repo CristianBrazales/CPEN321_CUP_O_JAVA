@@ -14,6 +14,8 @@ var postingSchema = new mongoose.Schema({
     zipcode: String,
     smoke: Boolean,
     cooking: String,
+    photo: String,
+    description: String,
     Startdate: Date,
     EndDate:Date
     //---------------------

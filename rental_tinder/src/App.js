@@ -10,6 +10,9 @@ import EditProfile from './components/EditProfile'
 //import SignupForm from './components/SignupForm';
 import PostForm from './components/PostForm';
 import tmp from './components/tmp';
+import ManagePost from './components/ManagePost';
+import ModifyPost from './components/ModifyPost'
+import SendEmail from './components/SendEmail'
 //The main module of the app
 
 const Application = createStackNavigator({
@@ -53,9 +56,25 @@ const Application = createStackNavigator({
         navigationOptions: () => ({
           //  header: null,
         }),
+    },
+    managepost:{
+        screen: ManagePost,
+        navigationOptions: () => ({
+          //  header: null,
+        }),
+    },
+    modifypost:{
+        screen: ModifyPost,
+        navigationOptions: () => ({
+          //  header: null,
+        }),
+    },
+    sendemail:{
+        screen: SendEmail,
+        navigationOptions: () => ({
+          //  header: null,
+        }),
     }
-
-
 
 });
 

@@ -13,6 +13,10 @@ var storage = require('multer-gridfs-storage')({
 });
 //--------------------
 
+var escapeStringRegexp    = require('escape-string-regexp');
+
+
+
 
 
 //creating a new add for the current user
@@ -68,6 +72,8 @@ function(req,res){
   newPosting.image.data = req.file.buffer;
   newPosting.image.contentType = req.file.mimetype;
   //-------------------------
+  //newPosting.photo = req.body.photo;
+  newPosting.description = req.body.description;
   //trying to post this data to the database
   posting.create(newPosting,function(err,returnedRoom){
     //error handling
