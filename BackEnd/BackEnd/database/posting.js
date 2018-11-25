@@ -16,6 +16,11 @@ var postingSchema = new mongoose.Schema({
     cooking: String,
     Startdate: Date,
     EndDate:Date
+    //---------------------
+    , image:{
+        data: Buffer, contentType: String
+    }
+    //---------------------
 });
 
 //adding passport support

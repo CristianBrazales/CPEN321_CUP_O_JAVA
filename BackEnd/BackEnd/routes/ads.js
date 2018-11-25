@@ -5,12 +5,22 @@ var posting               = require("../database/posting");
 var passport              = require("passport");
 var postcode              = require('postcode-validator');
 var validator             = require("../helperFunctions/validator.js");
-
+//--------------------
+var multer = require('multer');
+var upload = multer({storage: storage});
+var storage = require('multer-gridfs-storage')({
+  url:'mongodb://localhost:27017/rental_tinder_database'
+});
+//--------------------
 
 
 
 //creating a new add for the current user
-router.post("/posting",function(req,res){
+router.post("/posting", 
+//--------------------
+upload.single('photo'), 
+//--------------------
+function(req,res){
   var newPosting = new posting({username:req.body.username});
   newPosting.address = req.body.address;
   console.log("Room number from node backend:");
@@ -54,6 +64,10 @@ router.post("/posting",function(req,res){
   newPosting.earlyMorningPerson = req.body.earlyMorningPerson;
   newPosting.partyPerson = req.body.partyPerson;
   newPosting.title = req.body.title;
+  //-------------------------
+  newPosting.image.data = req.file.buffer;
+  newPosting.image.contentType = req.file.mimetype;
+  //-------------------------
   //trying to post this data to the database
   posting.create(newPosting,function(err,returnedRoom){
     //error handling
