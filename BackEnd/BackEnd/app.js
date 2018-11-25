@@ -36,7 +36,7 @@ var postingRoute              = require("./routes/ads");
 var searchRoute               = require("./routes/searching");
 var editUserRoute             = require("./routes/editUser");
 var editPostRoute             = require("./routes/editPosts");
-var emailRoute                = require("./routes/email");
+var emailRoute                = require("./routes/mailgun");
 //================
 //APP Config
 //================

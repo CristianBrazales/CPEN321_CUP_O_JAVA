@@ -27,11 +27,12 @@ router.post("/edit/post",function(req,res){
       return;
     }
     foundPosting.address = req.body.address;
-    foundPosting.zipcode = req.body.zipcode;
+    foundPosting.zipcode = req.body.zipcode.toLowerCase();
     foundPosting.roomNumber = req.body.roomNumber;
     foundPosting.earlyMorningPerson = req.body.earlyMorningPerson;
     foundPosting.partyPerson = req.body.partyPerson;
     foundPosting.smoke = req.body.smoke;
+    foundPosting.title = req.body.title;
 
     foundPosting.save();
     res.send({"success":true, "message":"Successfully updated post"});
