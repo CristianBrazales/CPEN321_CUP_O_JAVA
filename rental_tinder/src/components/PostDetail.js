@@ -2,8 +2,8 @@ import React from 'react';
 import { Text, View, Image, Linking } from 'react-native';
 import {Button, Card, CardSection,  Input} from './common';
 
-const PostDetail = ({ info }) => {
-    const { _id,username, address, roomNumber } = info;
+const PostDetail = ({ info,navigation }) => {
+    const { _id,username, address, roomNumber,smoke} = info;
     const {
       thumbnailStyle,
       headerContentStyle,
@@ -11,7 +11,12 @@ const PostDetail = ({ info }) => {
       headerTextStyle,
       imageStyle
     } = styles;
-  
+
+    function sendemail(){
+      navigation.navigate('sendemail',{
+       username: username.toString(),
+      })
+    }
     return (
       <Card>
         <CardSection>
@@ -19,19 +24,20 @@ const PostDetail = ({ info }) => {
             <Text style={headerTextStyle}>{"ID:"}{_id}</Text>
             <Text>{"Username:"}{username}</Text>
             <Text>{"Address:"}{address}</Text>
+            <Text>{"somke:"}{smoke.toString()}</Text>
           </View>
         </CardSection>
 
-  
+
         <CardSection>
-          <Button onPress={() =>alert("Pressed")}>
+          <Button onPress={() =>sendemail()}>
             Send Email
           </Button>
         </CardSection>
       </Card>
     );
   };
-  
+
   const styles = {
     headerContentStyle: {
       flexDirection: 'column',
@@ -56,5 +62,5 @@ const PostDetail = ({ info }) => {
       width: null
     }
   };
-  
+
   export default PostDetail;

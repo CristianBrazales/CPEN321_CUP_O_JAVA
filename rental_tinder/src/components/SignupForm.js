@@ -85,7 +85,7 @@ class SignupForm extends Component {
                 </CardSection>
 
                 <CardSection>
-                    <Button onPress={() => this.props.navigation.navigate('signup')}>
+                    <Button onPress={() => this.props.navigation.navigate('sendemail')}>
                         go to profile!
                 </Button>
                 </CardSection>

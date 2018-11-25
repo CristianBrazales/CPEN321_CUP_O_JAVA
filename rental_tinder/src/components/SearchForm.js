@@ -18,9 +18,6 @@ class SearchForm extends Component{
         smoking: !state.smoking
     }));
 
-    readinfo(){
-        return this.state.info.map(info =><Text>{info.address}</Text>);
-    }
 
     render(){
         return(
@@ -74,9 +71,6 @@ class SearchForm extends Component{
                </View>
                </CardSection>
 
-                <CardSection>
-                    {this.readinfo()}
-                </CardSection>
 
                 <CardSection>
                 <Button onPress={this.handlePress_search.bind(this)}>

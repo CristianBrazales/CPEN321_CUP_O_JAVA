@@ -234,7 +234,8 @@ class PostForm extends Component {
                 + '&zipcode='+ this.state.zipcode  + '&smoke='+this.state.smoking+ '&partyPerson='
                 +this.state.partyPerson + '&earlyMorningPerson='+ this.state.earlyMorningPerson);
 
-                  alert(res.message);
+                  alert("Success!");
+                  this.props.navigation.navigate('profile');
                 }
                 if (res.success == false){
 

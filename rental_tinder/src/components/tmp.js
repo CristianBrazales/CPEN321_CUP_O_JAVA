@@ -12,7 +12,7 @@ class tmp extends Component{
         this.setState({info: otherParam});
     }
     readinfo(){
-        return this.state.info.map(info =><PostDetail key={info._id} info={info} />);
+        return this.state.info.map(info =><PostDetail key={info._id} info={info} navigation={this.props.navigation}/>);
         //   return this.state.info.map(info =><Text key={info._id}>{info.smoke}</Text>);
     }
     componentDidMount(){
