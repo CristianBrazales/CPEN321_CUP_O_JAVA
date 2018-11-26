@@ -5,6 +5,8 @@ var posting               = require("../database/posting");
 var User                  = require("../database/users");
 var passport              = require("passport");
 var passportLocalMongoose = require("passport-local-mongoose");
+var emailValidator        = require("email-validator");
+
 
 //router handling for editing user
 
@@ -25,6 +27,14 @@ router.post("/user",function(req,res){
 
 //updating the user profile
 router.post("/user/edit",function(req,res){
+  //trying to check if the email address is in right format
+  var isValidEmail = emailValidator.validate(req.body.email.toLowerCase());
+
+  if(!isValidEmail){
+    res.send({"success":false, "message":{"message":"Email in invalid format"}});
+    return;
+  }
+
   //trying to find the user
   User.findOne({'username':req.body.username},function(err,foundUser){
     if(err){

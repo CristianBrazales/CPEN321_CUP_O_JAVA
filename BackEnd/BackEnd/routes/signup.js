@@ -4,6 +4,8 @@ var router                = express.Router();
 var User                  = require("../database/users");
 var passport              = require("passport");
 var validator             = require("../helperFunctions/validator.js");
+var emailValidator        = require("email-validator");
+
 
 router.get("/register",function(req,res){
   res.render("register");
@@ -14,10 +16,19 @@ router.get("/register",function(req,res){
 router.post("/register",function(req,res){
     //creating a new user
     var newUser = new User({username:req.body.username});
-    newUser.email = req.body.email.toLowerCase();
+
     newUser.phonenumber = req.body.phonenumber;
 
+    //trying to check if the email address is in right format
+    var isValidEmail = emailValidator.validate(req.body.email.toLowerCase());
 
+    if(!isValidEmail){
+      res.send({"success":false, "message":{"message":"Email in invalid format"}});
+      return;
+    }
+
+
+    newUser.email = req.body.email.toLowerCase();
     //check to see if the email exists, and if so, send an error message
     User.find({'email': req.body.email.toLowerCase()},function(err,user){
       if(err){
