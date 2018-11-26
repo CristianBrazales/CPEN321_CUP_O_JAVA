@@ -36,6 +36,13 @@ function(req,res){
   console.log("Room number from node backend:");
   console.log(req.body.roomNumber);
 
+  console.log(Number(req.body.roomNumber));
+  //check if the room number is a string or number
+  if(isNaN(Number(req.body.roomNumber))){
+    res.send({"success":false, "message": "Invalid room number"});
+    return;
+  }
+
   //validating room Number
   var validRoomNumber = validator.validateRoomNumber(req.body.roomNumber);
 
