@@ -13,6 +13,10 @@ var passport                 = require("passport");
 var localStrategy            = require("passport-local");
 var passportLocalMongoose    = require("passport-local-mongoose");
 var expressSession           = require("express-session");
+//----------------------
+var formidable = require(formidable);
+app.use(formidable());
+//----------------------
 //var secure                   = require('express-force-https');
 var postcode                 = require('postcode-validator');
 
