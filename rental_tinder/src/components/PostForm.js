@@ -33,10 +33,8 @@ class PostForm extends Component {
         super(props);
         this.state = { address: '', roomNumber: '', title: '', addressValidate: false, zipcode: '', username: '',
          earlyMorningPerson:false, partyPerson:false, smoking:false,
-         roomNumberValidate: false, startDateTimePickerVisible: false , endDateTimePickerVisible:false,
-        startDate: '00', endDate:'00', avatarSource: null,videoSource: null, imagepost: '', description:''};
-        this.selectPhotoTapped = this.selectPhotoTapped.bind(this);
-        this.selectVideoTapped = this.selectVideoTapped.bind(this);
+         roomNumberValidate: false, description:''};
+
     }
     componentDidMount() {
         this._loadInitialState().done();
@@ -78,83 +76,7 @@ class PostForm extends Component {
 
   }
 
-  showStartDateTimePicker = () => this.setState({ startDateTimePickerVisible: true });
 
-  showEndDateTimePicker = () => this.setState({ endDateTimePickerVisible: true });
-
-  hideStartDateTimePicker = () => this.setState({ startDateTimePickerVisible: false });
-
-  hideEndDateTimePicker = () => this.setState({ endDateTimePickerVisible: false });
-
-  handleStartDatePicked = (date) => {
-    this.setState({startDate: date})
-    this.hideStartDateTimePicker();
-
-  };
-
-  handleEndDatePicked = (date) => {
-    this.setState({endDate: date})
-    this.hideEndDateTimePicker();
-  };
-  // functions
-  selectPhotoTapped() {
-   const options = {
-     quality: 1.0,
-     maxWidth: 500,
-     maxHeight: 500,
-     storageOptions: {
-       skipBackup: true,
-     },
-   };
-
-   ImagePicker.showImagePicker(options, (response) => {
-     console.log('Response = ', response);
-
-     if (response.didCancel) {
-       console.log('User cancelled photo picker');
-     } else if (response.error) {
-       console.log('ImagePicker Error: ', response.error);
-     } else if (response.customButton) {
-       console.log('User tapped custom button: ', response.customButton);
-     } else {
-    //   let source = { uri: response.uri };
-
-       // You can also display the image using data:
-        let source = { uri: 'data:image/jpeg;base64,' + response.data };
-        console.warn(response.data);
-        let tes=JSON.stringify(response.data);
-       this.setState({
-         imagepost: tes,
-         avatarSource: source,
-       });
-     }
-   });
- }
-
- selectVideoTapped() {
-   const options = {
-     title: 'Video Picker',
-     takePhotoButtonTitle: 'Take Video...',
-     mediaType: 'video',
-     videoQuality: 'medium',
-   };
-
-   ImagePicker.showImagePicker(options, (response) => {
-     console.log('Response = ', response);
-
-     if (response.didCancel) {
-       console.log('User cancelled video picker');
-     } else if (response.error) {
-       console.log('ImagePicker Error: ', response.error);
-     } else if (response.customButton) {
-       console.log('User tapped custom button: ', response.customButton);
-     } else {
-       this.setState({
-         videoSource: response.uri,
-       });
-     }
-   });
- }
 
     render(){
         return(
@@ -243,27 +165,6 @@ class PostForm extends Component {
                </CardSection>
 
 
-<CardSection>
-                <View style={styles.container_2}>
-     <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
-       <View
-         style={[
-           styles.avatar,
-           styles.avatarContainer,
-           { marginBottom: 20 },
-         ]}
-       >
-         {this.state.avatarSource === null ? (
-           <Text>Select a Photo</Text>
-         ) : (
-           <Image style={styles.avatar} source={this.state.avatarSource} />
-         )}
-       </View>
-     </TouchableOpacity>
-
-
-   </View>
-   </CardSection>
                 <CardSection>
                 <Button onPress={this.handlePress_create_post.bind(this)}>
                    Post!
@@ -294,14 +195,14 @@ class PostForm extends Component {
                 + '&address=' + this.state.address + '&roomNumber=' + this.state.roomNumber
                 + '&zipcode='+ this.state.zipcode  + '&smoke='+this.state.smoking+ '&partyPerson='
                 +this.state.partyPerson + '&earlyMorningPerson='+ this.state.earlyMorningPerson
-                + '&photo='+(this.state.imagepost)+'&title='+this.state.title+ '&description='+this.state.description
+                + '&title='+this.state.title+ '&description='+this.state.description
             }).then((response) => response.json())
             .then((res) => {
 
                 if (res.success == true){
               //console.warn(this.state.avatarSource)
-              console.warn("SUCcce ")
                   alert(res.message);
+                  this.props.navigation.navigate('profile');
                 }
                 if (res.success == false){
                       console.warn("backend ")
@@ -345,17 +246,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
-  },
-  avatarContainer: {
-    borderColor: '#9B9B9B',
-    borderWidth: 1 / PixelRatio.get(),
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  avatar: {
-    borderRadius: 75,
-    width: 150,
-    height: 150,
   },
   paragraph:{
       fontSize: 19,
