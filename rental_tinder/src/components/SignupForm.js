@@ -8,10 +8,9 @@ class SignupForm extends Component {
     // for sign in, we need the following fields
     constructor(props) {
         super(props);
-        this.state = { userName: '', email: '', password: '', phonenumber: '', nameValidate: false, passwordValidate: false };
+        this.state = { userName: '', email: '', password: '', phonenumber: '', nameValidate: false, passwordValidate: false,emailValidate:false,phoneValidate:false };
 
     }
-    state = { userName: '', email: '', password: '', phonenumber: '', nameValidate: false, passwordValidate: false };
    // validate the user name input
     validate_username (userName) {
         alph = /^[a-zA-Z0-9]+$/
@@ -28,9 +27,21 @@ class SignupForm extends Component {
             } else {
                 this.setState({ passwordValidate: false, })
             }
+  }
+  validate_email  (email){
+      if (email!='') {
+              this.setState({ emailValidate: true, })
+          } else {
+              this.setState({ emailValidate: false, })
+          }
+  }
 
-
-
+  validate_phone  (phone){
+      if (phone!='') {
+              this.setState({ phoneValidate: true, })
+          } else {
+              this.setState({ phoneValidate: false, })
+          }
   }
 
     render(){
@@ -94,8 +105,11 @@ class SignupForm extends Component {
         // upon submit first check the inputs, on sucess send the data
         await this.validate_username(this.state.userName)
         await  this.validate_password(this.state.password)
+        await this.validate_email(this.state.email)
+        await this.validate_phone(this.state.phonenumber)
 
-        if (this.state.passwordValidate == true && this.state.nameValidate== true) {
+
+        if (this.state.passwordValidate == true && this.state.nameValidate== true && this.state.emailValidate==true && this.state.phoneValidate==true) {
 
 
             fetch('http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/register', {
@@ -147,6 +161,19 @@ class SignupForm extends Component {
 
                 ));
             }
+            else if (this.state.emailValidate == false) {
+                Alert.alert(JSON.stringify(
+                    "The email cannot be empty"
+
+                ));
+            }
+            else if (this.state.phoneValidate == false) {
+                Alert.alert(JSON.stringify(
+                    "The phone number cannot be empty"
+
+                ));
+            }
+
             // set flags
 
 

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import {Button, Card, CardSection,  Input} from './common';
-import {Switch, View, Text, StyleSheet} from 'react-native';
+import {Switch, View, Text, StyleSheet,Alert} from 'react-native';
 
 class SearchForm extends Component{
 
-    state = { zipcode: '',earlyMorningPerson:false, partyPerson:false, smoking:false, info:[] };
+    state = { zipcode: '',earlyMorningPerson:false, partyPerson:false, smoking:false, info:[] ,emptyValidate:false};
 
     ChangeState_morning = () =>this.setState(state =>({
             earlyMorningPerson: !state.earlyMorningPerson
@@ -17,7 +17,14 @@ class SearchForm extends Component{
     ChangeState_smoking = () =>this.setState(state =>({
         smoking: !state.smoking
     }));
+    validate_empty  (zipcode){
+        if (zipcode!='') {
+                this.setState({ emptyValidate: true, })
+            } else {
+                this.setState({ emptyValidate: false, })
+            }
 
+    }
 
     render(){
         return(
@@ -34,10 +41,8 @@ class SearchForm extends Component{
 
 
                 <CardSection>
-                <View style={styles.container} >
-                <Text style={styles.paragraph}>Please enter your teenant preferences:</Text>
-                </View>
-                </CardSection>
+                  <Text style={{fontWeight: 'bold',fontSize: 18}}>Please enter your teenant preferences:</Text>
+                  </CardSection>
 
                 <CardSection>
                 <View style={styles.container}>
@@ -86,7 +91,9 @@ class SearchForm extends Component{
 
     handlePress_search = async () => {
 //http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/search
+      await this.validate_empty(this.state.zipcode)
 
+      if(this.state.emptyValidate==true){
             fetch('http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/search', {
                 method: 'POST',
                 headers: {
@@ -114,7 +121,13 @@ class SearchForm extends Component{
                 }).catch((error) => {
                     alert("Something goes wrong");
         }).done();
+      }
+      else{
+        Alert.alert(JSON.stringify(
+            "please enter valide zipcode"
 
+        ));
+      }
     };
 
 }

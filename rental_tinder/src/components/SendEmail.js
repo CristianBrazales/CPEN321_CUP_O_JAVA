@@ -21,6 +21,10 @@ render(){
     <Card>
 
     <CardSection>
+      <Text style={{fontWeight: 'bold',fontSize: 18}}>Please fill your information:</Text>
+      </CardSection>
+
+    <CardSection>
         <Input
           placeholder = "Please enter your full name"
           label ="full name:"

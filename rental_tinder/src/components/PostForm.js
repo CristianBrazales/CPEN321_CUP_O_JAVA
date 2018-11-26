@@ -26,7 +26,7 @@ class PostForm extends Component {
         super(props);
         this.state = { address: '', roomNumber: '', title: '', price:'', addressValidate: false, zipcode: '', username: '',
          earlyMorningPerson:false, partyPerson:false, smoking:false,
-         roomNumberValidate: false, description:''};
+         roomNumberValidate: false, description:'',emptyValidate:false};
 
     }
     componentDidMount() {
@@ -66,6 +66,15 @@ class PostForm extends Component {
             } else {
                 this.setState({ roomNumberValidate: false, })
             }
+
+  }
+
+  validate_empty  (title,description,price,zipcode){
+      if (title!='' && description!='' && price!=''&& zipcode!='') {
+              this.setState({ emptyValidate: true, })
+          } else {
+              this.setState({ emptyValidate: false, })
+          }
 
   }
 
@@ -132,11 +141,10 @@ class PostForm extends Component {
                       />
                   </CardSection>
 
-                <CardSection>
-                <View style={styles.container} >
-                <Text style={styles.paragraph}>Please enter your teenant preferences:</Text>
-                </View>
-                </CardSection>
+                  <CardSection>
+                    <Text style={{fontWeight: 'bold',fontSize: 18}}>Please enter your teenant preferences:</Text>
+                    </CardSection>
+
 
                 <CardSection>
                 <View style={styles.container}>
@@ -191,8 +199,9 @@ class PostForm extends Component {
         // upon submit first check the inputs, on sucess send the data
         await this.validate_address(this.state.address)
         await this.validate_roomNumber(this.state.roomNumber)
+        await this.validate_empty(this.state.title,this.state.description,this.state.price,this.state.zipcode)
 
-        if (this.state.addressValidate == true && this.state.roomNumberValidate== true) {
+        if (this.state.addressValidate == true && this.state.roomNumberValidate== true && this.state.emptyValidate==true) {
 
             fetch('http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/posting', {
                 method: 'POST',
@@ -236,6 +245,12 @@ class PostForm extends Component {
             else if (this.state.roomNumberValidate == false) {
                 Alert.alert(JSON.stringify(
                     "please check the room number  (Maximum 20 rooms)"
+
+                ));
+            }
+            else if (this.state.emptyValidate == false) {
+                Alert.alert(JSON.stringify(
+                    "please fill all the empty boxes"
 
                 ));
             }

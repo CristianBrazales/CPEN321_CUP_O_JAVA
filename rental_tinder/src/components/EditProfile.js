@@ -1,17 +1,32 @@
 import React ,{ Component } from 'react';
 import {Button, Card, CardSection,  Input} from './common';
+import {Alert} from 'react-native';
 const MIN_CHARACTERS = 6;
 
 
 class EditProfile extends Component{
 
-    state = { username:'', newemail: '', newpassword: '', newphonenumber: '', passwordValidate: false, info:[] };
+    state = { username:'', newemail: '', newpassword: '', newphonenumber: '', passwordValidate: false, info:[],emailValidate:false,phoneValidate:false };
 
     validate_password  (newpassword){
         if (newpassword.length >= MIN_CHARACTERS) {
                 this.setState({ passwordValidate: true, })
             } else {
                 this.setState({ passwordValidate: false, })
+            }
+    }
+    validate_email  (email){
+        if (email!='') {
+                this.setState({ emailValidate: true, })
+            } else {
+                this.setState({ emailValidate: false, })
+            }
+    }
+    validate_phone  (phone){
+        if (phone!='') {
+                this.setState({ phoneValidate: true, })
+            } else {
+                this.setState({ phoneValidate: false, })
             }
     }
 
@@ -79,8 +94,10 @@ class EditProfile extends Component{
     handlePress_edit_profile = async () => {
         // upon submit first check the inputs, on sucess send the data
         await  this.validate_password(this.state.newpassword)
+        await  this.validate_phone(this.state.newphonenumber)
+        await  this.validate_email(this.state.newemail)
 
-        if (this.state.passwordValidate == true) {
+        if (this.state.passwordValidate == true && this.state.emailValidate==true && this.state.phoneValidate==true) {
 
           fetch('http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/user/edit', {
               method: 'POST',
@@ -107,7 +124,24 @@ class EditProfile extends Component{
         }
         // look for the error
         else {
-          alert("The password has to be at least 6 characters");
+           if(this.state.passwordValidate == false) {
+              Alert.alert(JSON.stringify(
+                  "please check the  password (at least 6 characters)"
+
+              ));
+          }
+          else if (this.state.emailValidate == false) {
+              Alert.alert(JSON.stringify(
+                  "The email cannot be empty"
+
+              ));
+          }
+          else if (this.state.phoneValidate == false) {
+              Alert.alert(JSON.stringify(
+                  "The phone number cannot be empty"
+
+              ));
+          }
         }
     }
 

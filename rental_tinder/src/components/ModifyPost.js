@@ -23,7 +23,15 @@ class ModifyPost extends Component{
           }
 
 }
-  state = { id:'' , address:'', title:'', zipcode:'',roomnumber:'', smoke: false, morning:false, party: false,addressValidate: true,roomNumberValidate: true, description:'',price:'' };
+validate_empty  (title,description,price,zipcode){
+    if (title!='' && description!='' && price!='' && zipcode !='') {
+            this.setState({ emptyValidate: true, })
+        } else {
+            this.setState({ emptyValidate: false, })
+        }
+
+}
+  state = { id:'' , address:'', title:'', zipcode:'',roomnumber:'', smoke: false, morning:false, party: false,addressValidate: true,roomNumberValidate: true, description:'',price:'',emptyValidate:false};
 
 
       ChangeState_morning = () =>this.setState(state =>({
@@ -184,8 +192,9 @@ class ModifyPost extends Component{
     handlePress_change_post = async () => {
       await this.validate_address(this.state.address)
       await this.validate_roomNumber(this.state.roomnumber)
+      await this.validate_empty(this.state.title,this.state.description,this.state.price, this.state.zipcode)
 
-      if (this.state.addressValidate == true && this.state.roomNumberValidate== true) {
+      if (this.state.addressValidate == true && this.state.roomNumberValidate== true && this.state.emptyValidate==true) {
 
           fetch('http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/edit/post', {
               method: 'POST',
@@ -229,6 +238,12 @@ class ModifyPost extends Component{
         else if (this.state.roomNumberValidate == false) {
             Alert.alert(JSON.stringify(
                 "please check the room number  (Maximum 20 rooms)"
+
+            ));
+        }
+        else if (this.state.emptyValidate == false) {
+            Alert.alert(JSON.stringify(
+                "please fill all the empty boxes"
 
             ));
         }
