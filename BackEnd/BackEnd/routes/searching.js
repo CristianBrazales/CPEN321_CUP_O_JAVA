@@ -36,9 +36,10 @@ router.post("/regex",function(req,res){
     //creating search parameter for our regex search, while doing so, skip special characters
     var regexZip = new RegExp(escapeStringRegexp(req.body.zipcode.toLowerCase()), 'gi');
     var regexTitle = new RegExp(escapeStringRegexp(req.body.zipcode.toLowerCase()), 'gi');
+    var regexAddress = new RegExp(escapeStringRegexp(req.body.zipcode.toLowerCase()), 'gi');
     //trying to search the database based on the parameter, and if found, send the objects,
     //otherwise, send error message
-    posting.find({$or:[{zipcode:regexZip},{title:regexTitle}]},function(err,foundPosting){
+    posting.find({$or:[{zipcode:regexZip},{title:regexTitle}, {address:regexAddress}]},function(err,foundPosting){
         if(err){
             console.log(err);
             res.send({"success":false, "message": "Error in search"});
