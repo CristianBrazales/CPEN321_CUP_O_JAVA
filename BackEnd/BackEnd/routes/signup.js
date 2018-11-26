@@ -19,13 +19,13 @@ router.post("/register",function(req,res){
 
 
     //check to see if the email exists, and if so, send an error message
-    User.find({'email': req.body.email},function(err,user){
+    User.find({'email': req.body.email.toLowerCase()},function(err,user){
       if(err){
         console.log(err);
       }
       else if(user.length>0){
         console.log("email exits");
-        res.send({"success":false, "message":"Email exists"});
+        res.send({"success":false, "message":{"message":"Email exists"}});
         return;
       }
     });
