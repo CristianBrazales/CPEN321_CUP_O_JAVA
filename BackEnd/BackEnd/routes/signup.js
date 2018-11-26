@@ -14,7 +14,7 @@ router.get("/register",function(req,res){
 router.post("/register",function(req,res){
     //creating a new user
     var newUser = new User({username:req.body.username});
-    newUser.email = req.body.email;
+    newUser.email = req.body.email.toLowerCase();
     newUser.phonenumber = req.body.phonenumber;
 
 

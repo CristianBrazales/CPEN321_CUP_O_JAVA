@@ -40,7 +40,7 @@ router.post("/user/edit",function(req,res){
         return;
       }
       //editing other parameters for the user
-      foundUser.email = req.body.email;
+      foundUser.email = req.body.email.toLowerCase();
       foundUser.phonenumber = req.body.phonenumber;
       //saving the edited user
       foundUser.save();
