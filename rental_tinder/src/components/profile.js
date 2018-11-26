@@ -128,7 +128,7 @@ class profile extends Component {
     render() {
 
         //
-         this._retrieveData().done();
+    
         return (
             //await this._retrieveData()
             <View >
