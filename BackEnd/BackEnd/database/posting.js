@@ -21,7 +21,8 @@ var postingSchema = new mongoose.Schema({
     //---------------------
     , image:{
         data: Buffer, contentType: String
-    }
+    },
+    image64: String
     //---------------------
 });
 

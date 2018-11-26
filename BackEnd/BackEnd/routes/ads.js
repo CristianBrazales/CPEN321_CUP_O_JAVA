@@ -22,7 +22,7 @@ var escapeStringRegexp    = require('escape-string-regexp');
 //creating a new add for the current user
 router.post("/posting", 
 //--------------------
-upload.single('photo'), 
+//upload.single('photo'), 
 //--------------------
 function(req,res){
   var newPosting = new posting({username:req.body.username});
@@ -69,9 +69,10 @@ function(req,res){
   newPosting.partyPerson = req.body.partyPerson;
   newPosting.title = req.body.title;
   //-------------------------
-  console.log("req body in ad.js: "+ req.body);
-  newPosting.image.data = req.file.buffer;
-  newPosting.image.contentType = req.file.mimetype;
+  // console.log("req body in ad.js: "+ req.body);
+  // newPosting.image.data = req.file.buffer;
+  // newPosting.image.contentType = req.file.mimetype;
+  newPosting.image64 = req.body.photo;
   //-------------------------
   //newPosting.photo = req.body.photo;
   newPosting.description = req.body.description;
