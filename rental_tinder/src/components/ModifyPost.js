@@ -23,7 +23,7 @@ class ModifyPost extends Component{
           }
 
 }
-  state = { id:'' , address:'', title:'', zipcode:'',roomnumber:'', smoke: false, morning:false, party: false,addressValidate: true,roomNumberValidate: true };
+  state = { id:'' , address:'', title:'', zipcode:'',roomnumber:'', smoke: false, morning:false, party: false,addressValidate: true,roomNumberValidate: true, description:'' };
 
 
       ChangeState_morning = () =>this.setState(state =>({
@@ -47,6 +47,8 @@ class ModifyPost extends Component{
       const smoke = navigation.getParam('smoke', 'NO-ID');
       const morning = navigation.getParam('morning', 'NO-ID');
       const party = navigation.getParam('party', 'NO-ID');
+      const title = navigation.getParam('title', 'NO-ID');
+      const description = navigation.getParam('description', 'NO-ID');
       this.setState({id: id});
       this.setState({address:address});
       this.setState({roomnumber:roomnumber});
@@ -54,6 +56,8 @@ class ModifyPost extends Component{
       this.setState({smoke:smoke});
       this.setState({morning:morning});
       this.setState({party:party});
+      this.setState({title:title});
+      this.setState({description:description});
   }
 
   componentDidMount(){
@@ -75,12 +79,21 @@ class ModifyPost extends Component{
       <Card>
       <CardSection>
           <Input
-            placeholder = "Title of the place"
+            placeholder = {this.state.title}
             label ="Title:"
             value={this.state.title}
             onChangeText={title => this.setState({ title})}
             />
         </CardSection>
+
+        <CardSection>
+            <Input
+              placeholder = {this.state.description}
+              label ="Description:"
+              value={this.state.description}
+              onChangeText={description => this.setState({ description})}
+              />
+          </CardSection>
 
         <CardSection>
             <Input
@@ -166,15 +179,12 @@ class ModifyPost extends Component{
               body:'id='+ this.state.id
               + '&address=' + this.state.address + '&roomNumber=' + this.state.roomnumber
               + '&zipcode='+ this.state.zipcode  + '&smoke='+this.state.smoke+ '&partyPerson='
-              +this.state.party + '&earlyMorningPerson='+ this.state.morning
+              +this.state.party + '&earlyMorningPerson='+ this.state.morning+ '&title='+this.state.title+
+              '&description='+this.state.description
           }).then((response) => response.json())
           .then((res) => {
 
               if (res.success == true){
-              console.warn('_id='+ this.state.id
-              + '&address=' + this.state.address + '&roomNumber=' + this.state.roomnumber
-              + '&zipcode='+ this.state.zipcode  + '&smoke='+this.state.smoke+ '&partyPerson='
-              +this.state.party + '&earlyMorningPerson='+ this.state.morning);
 
                 alert("Success!");
                 this.props.navigation.navigate('profile');

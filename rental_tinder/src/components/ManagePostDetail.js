@@ -5,7 +5,7 @@ import {Button, Card, CardSection,  Input} from './common';
 
 const ManagePostDetail = ({ info,navigation}) => {
 
-    const { _id,username, address, zipcode, roomNumber,smoke,earlyMorningPerson, partyPerson} = info;
+    const { _id,username, address, zipcode, roomNumber,smoke,earlyMorningPerson, partyPerson, title, description} = info;
     const {
       thumbnailStyle,
       headerContentStyle,
@@ -22,16 +22,18 @@ const ManagePostDetail = ({ info,navigation}) => {
         morning:earlyMorningPerson,
         party: partyPerson,
         zipcode:zipcode,
+        title: title,
+        description: description
       })
     }
     return (
       <Card>
         <CardSection>
           <View style={headerContentStyle}>
-            <Text style={headerTextStyle}>{"ID:"}{_id}</Text>
-            <Text>{"Username:"}{username}</Text>
-            <Text>{"Address:"}{address}</Text>
-            <Text>{"somke:"}{smoke.toString()}</Text>
+            <Text style={headerTextStyle}>{"Title: "}{title}</Text>
+            <View><Text style={{fontWeight: 'bold'}}>Description: </Text><Text>{description}</Text></View>
+            <View><Text style={{fontWeight: 'bold'}}>Address: </Text><Text>{address}</Text></View>
+            <View><Text style={{fontWeight: 'bold'}}>Username: </Text><Text>{username}</Text></View>
           </View>
         </CardSection>
 
@@ -52,7 +54,8 @@ const ManagePostDetail = ({ info,navigation}) => {
       justifyContent: 'space-around'
     },
     headerTextStyle: {
-      fontSize: 18
+      fontSize: 18,
+      fontWeight: 'bold'
     },
     thumbnailStyle: {
       height: 50,
