@@ -14,8 +14,8 @@ class SignupForm extends Component {
     state = { userName: '', email: '', password: '', phonenumber: '', nameValidate: false, passwordValidate: false };
    // validate the user name input
     validate_username (userName) {
-        alph = /^[a-zA-Z]+$/
-        if (alph.test(userName) && userName.length > MIN_CHARACTERS) {
+        alph = /^[a-zA-Z0-9]+$/
+        if (alph.test(userName) && userName.length >= MIN_CHARACTERS) {
             this.setState({ nameValidate: true, })
         } else {
             this.setState({ nameValidate: false, })
@@ -113,6 +113,7 @@ class SignupForm extends Component {
             .then((res) => {
 
                 if (res.success == true) {
+                  alert("Success!");
                   this.props.navigation.navigate('login');
                 }
                 else {

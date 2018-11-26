@@ -1,7 +1,7 @@
 import React ,{ Component } from 'react';
 import {Button, Card, CardSection,  Input, MessageInput} from './common'
 import {Alert} from 'react-native';
-import { Text, TouchableOpacity, View,Switch, StyleSheet,AsyncStorage} from 'react-native';
+import { Text, TouchableOpacity, View,Switch, StyleSheet,AsyncStorage,ScrollView} from 'react-native';
 
 
 const MIN_CHARACTERS = 6;
@@ -73,6 +73,7 @@ class PostForm extends Component {
 
     render(){
         return(
+          <ScrollView>
             <Card>
               <CardSection>
                   <Input
@@ -177,6 +178,7 @@ class PostForm extends Component {
 
 
             </Card>
+            </ScrollView>
         );
     }
 
