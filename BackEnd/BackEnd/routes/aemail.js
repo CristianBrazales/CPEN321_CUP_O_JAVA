@@ -5,6 +5,7 @@ var bodyParser            = require("body-parser");
 var nodemailer            = require("nodemailer");
 var User                  = require("../database/users");
 var xoauth2               = require('xoauth2');
+var emailValidator        = require("email-validator");
 
 var email;
 
@@ -23,6 +24,15 @@ User.findOne({'username':req.body.username},function(err,foundUser){
   email = foundUser.email;
   email = email.toString();
   console.log(email.toString());
+
+  //checking if the email in valid format
+  //trying to check if the email address is in right format
+  var isValidEmail = emailValidator.validate(req.body.email.toLowerCase());
+
+  if(!isValidEmail){
+    res.send({"success":false, "message":"Email in invalid format"});
+    return;
+  }
 
   //send email
 
