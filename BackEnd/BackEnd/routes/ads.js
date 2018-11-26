@@ -6,11 +6,11 @@ var passport              = require("passport");
 var postcode              = require('postcode-validator');
 var validator             = require("../helperFunctions/validator.js");
 //--------------------
-var multer = require('multer');
-var upload = multer({storage: storage});
-var storage = require('multer-gridfs-storage')({
-  url:'mongodb://localhost:27017/rental_tinder_database', useNewUrlParser: true 
-});
+// var multer = require('multer');
+// var upload = multer({storage: storage});
+// var storage = require('multer-gridfs-storage')({
+//   url:'mongodb://localhost:27017/rental_tinder_database', useNewUrlParser: true 
+// });
 
 var formidable = require('express-formidable');
 //router.use(formidable());
