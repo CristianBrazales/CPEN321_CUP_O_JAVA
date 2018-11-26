@@ -23,7 +23,7 @@ class ModifyPost extends Component{
           }
 
 }
-  state = { id:'' , address:'', title:'', zipcode:'',roomnumber:'', smoke: false, morning:false, party: false,addressValidate: true,roomNumberValidate: true, description:'' };
+  state = { id:'' , address:'', title:'', zipcode:'',roomnumber:'', smoke: false, morning:false, party: false,addressValidate: true,roomNumberValidate: true, description:'',price:'' };
 
 
       ChangeState_morning = () =>this.setState(state =>({
@@ -49,6 +49,7 @@ class ModifyPost extends Component{
       const party = navigation.getParam('party', 'NO-ID');
       const title = navigation.getParam('title', 'NO-ID');
       const description = navigation.getParam('description', 'NO-ID');
+      const price = navigation.getParam('price', 'NO-ID');
       this.setState({id: id});
       this.setState({address:address});
       this.setState({roomnumber:roomnumber});
@@ -58,6 +59,7 @@ class ModifyPost extends Component{
       this.setState({party:party});
       this.setState({title:title});
       this.setState({description:description});
+      this.setState({price:price});
   }
 
   componentDidMount(){
@@ -94,6 +96,16 @@ class ModifyPost extends Component{
               onChangeText={description => this.setState({ description})}
               />
           </CardSection>
+
+          <CardSection>
+              <Input
+                placeholder = {this.state.price}
+                label ="Price:"
+                value={this.state.price}
+                onChangeText={price => this.setState({ price})}
+
+                />
+            </CardSection>
 
         <CardSection>
             <Input
@@ -180,7 +192,7 @@ class ModifyPost extends Component{
               + '&address=' + this.state.address + '&roomNumber=' + this.state.roomnumber
               + '&zipcode='+ this.state.zipcode  + '&smoke='+this.state.smoke+ '&partyPerson='
               +this.state.party + '&earlyMorningPerson='+ this.state.morning+ '&title='+this.state.title+
-              '&description='+this.state.description
+              '&description='+this.state.description +'&price='+this.state.price
           }).then((response) => response.json())
           .then((res) => {
 

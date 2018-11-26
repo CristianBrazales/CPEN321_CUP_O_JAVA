@@ -5,7 +5,7 @@ import {Button, Card, CardSection,  Input} from './common';
 
 const ManagePostDetail = ({ info,navigation}) => {
 
-    const { _id,username, address, zipcode, roomNumber,smoke,earlyMorningPerson, partyPerson, title, description} = info;
+    const { _id,username, address, zipcode, roomNumber,smoke,earlyMorningPerson, partyPerson, title, description, price} = info;
     const {
       thumbnailStyle,
       headerContentStyle,
@@ -17,13 +17,14 @@ const ManagePostDetail = ({ info,navigation}) => {
       navigation.navigate('modifypost',{
         userid: _id.toString(),
         address:address.toString(),
-        roomnumber: roomNumber,
+        roomnumber: roomNumber.toString(),
         smoke: smoke,
         morning:earlyMorningPerson,
         party: partyPerson,
         zipcode:zipcode,
         title: title,
-        description: description
+        description: description,
+        price: price.toString(),
       })
     }
     return (
@@ -33,6 +34,7 @@ const ManagePostDetail = ({ info,navigation}) => {
             <Text style={headerTextStyle}>{"Title: "}{title}</Text>
             <View><Text style={{fontWeight: 'bold'}}>Description: </Text><Text>{description}</Text></View>
             <View><Text style={{fontWeight: 'bold'}}>Address: </Text><Text>{address}</Text></View>
+            <View><Text style={{fontWeight: 'bold'}}>Price: </Text><Text>{price}</Text></View>
             <View><Text style={{fontWeight: 'bold'}}>Username: </Text><Text>{username}</Text></View>
           </View>
         </CardSection>

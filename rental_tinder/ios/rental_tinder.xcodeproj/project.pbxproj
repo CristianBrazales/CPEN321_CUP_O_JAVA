@@ -1279,7 +1279,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.rental-tinder343234";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.rental-tinder34375754";
 				PRODUCT_NAME = rental_tinder;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1303,7 +1303,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.rental-tinder343234";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.rental-tinder34375754";
 				PRODUCT_NAME = rental_tinder;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";

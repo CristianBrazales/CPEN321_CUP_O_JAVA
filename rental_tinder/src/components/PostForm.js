@@ -24,7 +24,7 @@ class PostForm extends Component {
     // for sign in, we need the following fields
     constructor(props) {
         super(props);
-        this.state = { address: '', roomNumber: '', title: '', addressValidate: false, zipcode: '', username: '',
+        this.state = { address: '', roomNumber: '', title: '', price:'', addressValidate: false, zipcode: '', username: '',
          earlyMorningPerson:false, partyPerson:false, smoking:false,
          roomNumberValidate: false, description:''};
 
@@ -105,7 +105,7 @@ class PostForm extends Component {
                 <CardSection>
                     <Input
                     placeholder = "Zipcode:V6T1X6"
-                    label =" Zipcode:"
+                    label ="Zipcode:"
                     value={this.state.zipcode}
                     onChangeText={zipcode =>this.setState({zipcode})}
                     />
@@ -113,11 +113,21 @@ class PostForm extends Component {
                 <CardSection>
                     <Input
                     placeholder = "Description"
-                    label =" Description:"
+                    label ="Description:"
                     value={this.state.description}
                     onChangeText={  description=>this.setState({description})}
                     />
                 </CardSection>
+
+                <CardSection>
+                    <Input
+                      placeholder = "Expected price"
+                      label ="Price:"
+                      value={this.state.price}
+                      onChangeText={price => this.setState({ price})}
+
+                      />
+                  </CardSection>
 
                 <CardSection>
                 <View style={styles.container} >
@@ -188,7 +198,7 @@ class PostForm extends Component {
                 + '&address=' + this.state.address + '&roomNumber=' + this.state.roomNumber
                 + '&zipcode='+ this.state.zipcode  + '&smoke='+this.state.smoking+ '&partyPerson='
                 +this.state.partyPerson + '&earlyMorningPerson='+ this.state.earlyMorningPerson
-                + '&title='+this.state.title+ '&description='+this.state.description
+                + '&title='+this.state.title+ '&description='+this.state.description +'&price='+this.state.price
             }).then((response) => response.json())
             .then((res) => {
 

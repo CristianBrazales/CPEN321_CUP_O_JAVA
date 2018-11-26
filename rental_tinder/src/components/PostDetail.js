@@ -8,7 +8,7 @@ import {
 
 } from 'react-native';
 const PostDetail = ({ info,navigation }) => {
-    const { _id,username, address, roomNumber,smoke ,title, description} = info;
+    const { _id,username, address, roomNumber,smoke ,title, description,price} = info;
     const {
       thumbnailStyle,
       headerContentStyle,
@@ -29,6 +29,7 @@ const PostDetail = ({ info,navigation }) => {
           <Text style={headerTextStyle}>{"Title: "}{title}</Text>
           <View><Text style={{fontWeight: 'bold'}}>Description: </Text><Text>{description}</Text></View>
           <View><Text style={{fontWeight: 'bold'}}>Address: </Text><Text>{address}</Text></View>
+          <View><Text style={{fontWeight: 'bold'}}>Price: </Text><Text>{price}</Text></View>
           <View><Text style={{fontWeight: 'bold'}}>Username: </Text><Text>{username}</Text></View>
         </View>
       </CardSection>

@@ -17,7 +17,7 @@ class LoginForm extends Component {
     }
     _loadInitialState = async () => {
         var value = await AsyncStorage.getItem('user');
-
+        
         if (value !== null)
             this.props.navigation.navigate('profile');
     }
@@ -49,8 +49,9 @@ class LoginForm extends Component {
 
                     var string = JSON.stringify(res.username);
 
-                  
+
                     AsyncStorage.setItem('username', string);
+                    this.setState({password:""});
                      this.props.navigation.navigate('profile');
                 }
                 else {
@@ -97,7 +98,9 @@ class LoginForm extends Component {
             }).done();
     }*/
     render(){
+
         return(
+
             <View>
             <Header headerText ='Rental Tinder'/>
             <Card>
