@@ -1,6 +1,6 @@
 import React ,{ Component } from 'react';
 import {Button, Card, CardSection,  Input} from './common';
-import {Text,View,Switch, StyleSheet} from 'react-native';
+import {Text,View,Switch, StyleSheet,Alert} from 'react-native';
 
 const MIN_CHARACTERS = 6;
 const MAX_NUMBER = 20;

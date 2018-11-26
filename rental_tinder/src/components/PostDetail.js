@@ -8,7 +8,7 @@ import {
 
 } from 'react-native';
 const PostDetail = ({ info,navigation }) => {
-    const { _id,username, address, roomNumber,smoke,photo} = info;
+    const { _id,username, address, roomNumber,smoke ,title, description} = info;
     const {
       thumbnailStyle,
       headerContentStyle,
@@ -24,33 +24,14 @@ const PostDetail = ({ info,navigation }) => {
     }
     return (
       <Card>
-        <CardSection>
-          <View style={headerContentStyle}>
-            <Text style={headerTextStyle}>{"ID:"}{_id}</Text>
-            <Text>{"Username:"}{username}</Text>
-            <Text>{"Address:"}{address}</Text>
-            <Text>{"somke:"}{smoke.toString()}</Text>
-            <Text>{photo.toString()}</Text>
-          </View>
-        </CardSection>
-        <CardSection>
-                        <View style={styles.container_2}>
-
-               <View
-                 style={[
-                   styles.avatar,
-                   styles.avatarContainer,
-                   { marginBottom: 20 },
-                 ]}
-               >
-                 {
-                   <Image style={styles.avatar} source={this.state.avatarSource} />
-                 }
-               </View>
-
-
-           </View>
-           </CardSection>
+      <CardSection>
+        <View style={headerContentStyle}>
+          <Text style={headerTextStyle}>{"Title: "}{title}</Text>
+          <View><Text style={{fontWeight: 'bold'}}>Description: </Text><Text>{description}</Text></View>
+          <View><Text style={{fontWeight: 'bold'}}>Address: </Text><Text>{address}</Text></View>
+          <View><Text style={{fontWeight: 'bold'}}>Username: </Text><Text>{username}</Text></View>
+        </View>
+      </CardSection>
 
         <CardSection>
           <Button onPress={() =>sendemail()}>
