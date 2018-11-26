@@ -5,11 +5,12 @@ var posting               = require("../database/posting");
 var passport              = require("passport");
 var postcode              = require('postcode-validator');
 var validator             = require("../helperFunctions/validator.js");
+var escapeStringRegexp    = require('escape-string-regexp');
 //--------------------
 // var multer = require('multer');
 // var upload = multer({storage: storage});
 // var storage = require('multer-gridfs-storage')({
-//   url:'mongodb://localhost:27017/rental_tinder_database', useNewUrlParser: true 
+//   url:'mongodb://localhost:27017/rental_tinder_database', useNewUrlParser: true
 // });
 
 // var formidable = require('express-formidable');
@@ -21,12 +22,12 @@ var validator             = require("../helperFunctions/validator.js");
 //   }));
 //--------------------
 
-var escapeStringRegexp    = require('escape-string-regexp');
+
 
 //creating a new add for the current user
-router.post("/posting", 
+router.post("/posting",
 //--------------------
-//upload.single('photo'), 
+//upload.single('photo'),
 //--------------------
 function(req,res){
 
@@ -43,11 +44,7 @@ function(req,res){
     return;
   }
 
-  // if(req.body.roomNumber<0){
-  //
-  //   res.send({"success":false, "message":"Invalid room number"});
-  //   return;
-  // }
+
 
 
   newPosting.roomNumber = req.body.roomNumber;
@@ -61,11 +58,6 @@ function(req,res){
     return;
   }
 
-  // var isValidZipcode = postcode.validate(req.body.zipcode, 'CA');
-  // if(!isValidZipcode) {
-  //   res.send({"success":false, "message":"Invalid zip code"});
-  //   return;
-  // }
 
   //creating an object for search query
   newPosting.zipcode = req.body.zipcode.toLowerCase();
@@ -78,11 +70,13 @@ function(req,res){
   //newPosting.image.data = req.file.buffer;
   //newPosting.image.contentType = req.file.mimetype;
   //newPosting.image64 = req.body.photo;
-  newPosting.img.path = req.files.photo.path;
+  //newPosting.img.path = req.files.photo.path;
 
   //-------------------------
   //newPosting.photo = req.body.photo;
   newPosting.description = req.body.description;
+
+  newPosting.price = req.body.price;
   //trying to post this data to the database
   posting.create(newPosting,function(err,returnedRoom){
     //error handling
@@ -92,7 +86,6 @@ function(req,res){
       return;
     }
     else{
-      // res.send(returnedCar);
       //if no error, let front end know that the post was successful
       res.send({"success":true, "message": "Successfully created a post"});
       return;

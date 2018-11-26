@@ -18,6 +18,7 @@ router.post("/search",function(req,res){
   //front end
   posting.find({$and:[{"zipcode":zipcode},{"earlyMorningPerson":earlyMorningPerson},
   {"partyPerson":partyPerson},{"smoking":smoking}]}, function(err,foundPosting){
+    //error handling
     if(err) {
       console.log(err);
       res.send({"success":false, "message":"Error in search"});
@@ -32,10 +33,9 @@ router.post("/search",function(req,res){
 router.post("/regex",function(req,res){
   console.log(req.body.zipcode);
   if(1){
-    //creating search parameter for our regex search
+    //creating search parameter for our regex search, while doing so, skip special characters
     var regexZip = new RegExp(escapeStringRegexp(req.body.zipcode.toLowerCase()), 'gi');
     var regexTitle = new RegExp(escapeStringRegexp(req.body.zipcode.toLowerCase()), 'gi');
-    //console.log("The query is: " + regex);
     //trying to search the database based on the parameter, and if found, send the objects,
     //otherwise, send error message
     posting.find({$or:[{zipcode:regexZip},{title:regexTitle}]},function(err,foundPosting){

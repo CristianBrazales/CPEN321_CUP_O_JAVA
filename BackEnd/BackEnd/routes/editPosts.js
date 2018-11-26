@@ -35,6 +35,7 @@ router.post("/edit/post",function(req,res){
     foundPosting.title = req.body.title;
     foundPosting.photo = req.body.photo;
     foundPosting.description = req.body.description;
+    foundPosting.price = req.body.price;
 
     foundPosting.save();
     res.send({"success":true, "message":"Successfully updated post"});

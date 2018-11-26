@@ -6,10 +6,12 @@ var User                  = require("../database/users");
 var passport              = require("passport");
 var passportLocalMongoose = require("passport-local-mongoose");
 
-//router
+//router handling for editing user
+
 //getting all the information about the username and sending it to the frontend
 router.post("/user",function(req,res){
   User.findOne({'username':req.body.username},function(err,foundUser){
+    //error handling
     if(err){
       console.log(err);
       res.send({"success":false, "message": "Error in the backend"});
@@ -45,8 +47,6 @@ router.post("/user/edit",function(req,res){
       res.send({"success": true, "message": "Successfully updated user"});
       return;
     });
-
   });
-  //res.send("hello");
 });
 module.exports = router;

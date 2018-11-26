@@ -15,6 +15,7 @@ var postingSchema = new mongoose.Schema({
     smoke: Boolean,
     cooking: String,
     photo: String,
+    price: Number,
     description: String,
     Startdate: Date,
     EndDate:Date

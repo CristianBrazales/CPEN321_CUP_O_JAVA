@@ -18,17 +18,6 @@ router.post("/register",function(req,res){
     newUser.phonenumber = req.body.phonenumber;
 
 
-    //validating email
-    //console.log(validator.validateRoomNumber(-20));
-  //  console.log(validator.validateEmail("shafi.rpl@gmail.com"))
-    //var validEmail = validator(newUser.email);
-    //console.log("Valid email output is:"+validEmail);
-
-    // if(!validEmail){
-    //   res.send({"success":false, "message":"Email exists"});
-    //   return;
-    // }
-
     //check to see if the email exists, and if so, send an error message
     User.find({'email': req.body.email},function(err,user){
       if(err){
@@ -53,7 +42,6 @@ router.post("/register",function(req,res){
             passport.authenticate("local")(req,res,function(){
                 res.send({"success":true, "message":"successful"});
                 console.log(req.body);
-                //res.redirect("/");
             });
         }
 

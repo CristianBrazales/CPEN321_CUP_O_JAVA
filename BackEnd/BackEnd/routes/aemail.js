@@ -8,8 +8,10 @@ var xoauth2               = require('xoauth2');
 
 var email;
 
+//route handler for email
 router.post("/email",function(req,res){
 
+//trying to retrive the user email and then send the email
 User.findOne({'username':req.body.username},function(err,foundUser){
   if(err){
     console.log(err);
@@ -23,6 +25,8 @@ User.findOne({'username':req.body.username},function(err,foundUser){
   console.log(email.toString());
 
   //send email
+
+  //this serves as the message body for the email
   const output = `<p>New Contact Request </p>
   <h3>Contact Details</h3>
   <li>Name: ${req.body.name}</li>
@@ -31,34 +35,8 @@ User.findOne({'username':req.body.username},function(err,foundUser){
   <h3>Message</h3>
   <p>${req.body.message}</p>`;
 
-  //nodemailer stuff
-  // var transporter = nodemailer.createTransport({
-  //       host: 'smtp.mail.com',
-  //       port: 587,
-  //       secure: false, // true for 465, false for other ports
-  //       auth: {
-  //           user: 'cpen321cuopjava@gmail.com', // generated ethereal user
-  //           pass: 'Cpen321@' // generated ethereal password
-  //       }
-  //       // pool: true, // use pooled connection
-  //       // rateLimit: true, // enable to make sure we are limiting
-  //       // maxConnections: 1, // set limit to 1 connection only
-  //       // maxMessages: 3 // send 3 emails per second
-  //   });
 
-  //gmail setup
-//   var transporter = nodemailer.createTransport({
-//     service: 'gmail',
-//     auth: {
-//         xoauth2: xoauth2.createXOAuth2Generator({
-//             user: 'cpen321cuopjava@gmail.com',
-//             clientId: '575996118971-1avb3d7pg42jo9jo16gl9ruqf5pisbs7.apps.googleusercontent.com',
-//             clientSecret: 'IbUs2CSjAFC3OG2wXX9jX2XQ',
-//             refreshToken: '1/h02ispN6KLRrvZAqYBesvkKGxdMkuDK_3XzS-XTFsrFCVXRiKCMPKKW6tI7MU9bn'
-//         })
-//     }
-// });
-
+//this sets up the smtp server for nodemailer
 let transporter = nodemailer.createTransport({
   service: 'Gmail',
   auth: {

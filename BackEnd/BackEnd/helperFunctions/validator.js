@@ -5,18 +5,7 @@ var passport              = require("passport");
 var postcode              = require('postcode-validator');
 
 
-// var validateEmail = function(email){
-//     User.find({'email': email},function(err,user){
-//       if(err){
-//         console.log(err);
-//       }
-//       else if(user.length>0){
-//         console.log("email exits");
-//         return false;
-//       }
-//       else return true;
-//     });
-//   }
+
 
 module.exports = {
   validateEmail : function(email){
