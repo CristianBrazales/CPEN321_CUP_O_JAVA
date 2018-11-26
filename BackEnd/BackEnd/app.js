@@ -116,14 +116,6 @@ app.post("/login",function(req,res,next){
 
   });
 },
-// passport.authenticate("local",{
-//
-//     successRedirect:"/success" + "/" + user,
-//     failureRedirect: "/failure"
-//
-// }),function(req,res){
-//  console.log(req.body);
-// });
 
 passport.authenticate("local"),
 
@@ -134,14 +126,12 @@ passport.authenticate("local"),
 });
 
 
-// app.post("/login",function(req,res){
-//  console.log(req.body);
-// });
+
 
 //LogOut
-app.get("/logout",function(req, res) {
+app.post("/logout",function(req, res) {
     req.logout();
-    res.redirect("/");
+    res.send({"success":true, "message":"User logged out"});
 });
 
 
