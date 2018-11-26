@@ -20,7 +20,7 @@ var postingSchema = new mongoose.Schema({
     EndDate:Date
     //---------------------
     , image:{
-        data: Buffer, contentType: String
+        data: Buffer, contentType: String, path:String
     },
     image64: String
     //---------------------

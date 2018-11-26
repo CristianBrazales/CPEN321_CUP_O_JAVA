@@ -9,8 +9,16 @@ var validator             = require("../helperFunctions/validator.js");
 var multer = require('multer');
 var upload = multer({storage: storage});
 var storage = require('multer-gridfs-storage')({
-  url:'mongodb://localhost:27017/rental_tinder_database'
+  url:'mongodb://localhost:27017/rental_tinder_database', useNewUrlParser: true 
 });
+
+var formidable = require('express-formidable');
+//router.use(formidable());
+router.use(formidable({
+    //encoding: 'utf-8',
+    uploadDir: './uploads/',
+    multiples: true, // req.files to be arrays of files
+  }));
 //--------------------
 
 var escapeStringRegexp    = require('escape-string-regexp');
@@ -25,6 +33,9 @@ router.post("/posting",
 //upload.single('photo'), 
 //--------------------
 function(req,res){
+  //----------------------------
+  req.body = req.fields;
+  //----------------------------
   var newPosting = new posting({username:req.body.username});
   newPosting.address = req.body.address;
   console.log("Room number from node backend:");
@@ -69,10 +80,12 @@ function(req,res){
   newPosting.partyPerson = req.body.partyPerson;
   newPosting.title = req.body.title;
   //-------------------------
-  // console.log("req body in ad.js: "+ req.body);
-  // newPosting.image.data = req.file.buffer;
-  // newPosting.image.contentType = req.file.mimetype;
-  newPosting.image64 = req.body.photo;
+  //console.log("req file in ad.js: "+ req.file);
+  //newPosting.image.data = req.file.buffer;
+  //newPosting.image.contentType = req.file.mimetype;
+  //newPosting.image64 = req.body.photo;
+  newPosting.img.path = req.files.photo.path;
+
   //-------------------------
   //newPosting.photo = req.body.photo;
   newPosting.description = req.body.description;
