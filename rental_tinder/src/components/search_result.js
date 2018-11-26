@@ -19,13 +19,13 @@ class search_result extends Component {
 
 
          var value = await AsyncStorage.getItem('search');
-         console.warn(value);
+         //console.warn(value);
         this.setState ({search_res: value});
         var string_ob= value;
        var objec= JSON.parse(string_ob);
     }
     render(){
-      console.warn("second"+ this.state.search_res);
+    //  console.warn("second"+ this.state.search_res);
       var string_ob= this.state.search_res.toString();
       //  const usNA= objec[0].username;
 
