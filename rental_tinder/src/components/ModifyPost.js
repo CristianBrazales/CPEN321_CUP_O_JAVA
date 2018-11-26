@@ -16,7 +16,7 @@ class ModifyPost extends Component{
   }
   //validate the password input
   validate_roomNumber  (roomNumber){
-      if (roomNumber <= MAX_NUMBER) {
+      if (roomNumber <= MAX_NUMBER && roomNumber!= '') {
               this.setState({ roomNumberValidate: true, })
           } else {
               this.setState({ roomNumberValidate: false, })
@@ -87,6 +87,15 @@ class ModifyPost extends Component{
             onChangeText={title => this.setState({ title})}
             />
         </CardSection>
+
+        <CardSection>
+            <MessageInput
+              placeholder = {this.state.description}
+              label ="Description:"
+              value={this.state.description}
+              onChangeText={description => this.setState({ description})}
+              />
+          </CardSection>
 
 
 
@@ -160,15 +169,8 @@ class ModifyPost extends Component{
        </View>
        </CardSection>
 
-       <CardSection>
-           <MessageInput
-             placeholder = {this.state.description}
-             label ="Description:"
-             value={this.state.description}
-             onChangeText={description => this.setState({ description})}
-             />
-         </CardSection>
-         
+
+
        <CardSection>
        <Button onPress={this.handlePress_change_post.bind(this)}>
         Change!

@@ -116,9 +116,10 @@ class SignupForm extends Component {
                   alert("Success!");
                   this.props.navigation.navigate('login');
                 }
-                else {
-                    alert(res.message.message);
 
+                if (res.success == false){
+
+                  alert(res.message.message);
                 }
             }).catch((error) => {
                 alert("something goes wrong");

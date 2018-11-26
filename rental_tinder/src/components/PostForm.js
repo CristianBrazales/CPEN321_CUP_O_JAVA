@@ -61,7 +61,7 @@ class PostForm extends Component {
     }
     //validate the password input
     validate_roomNumber  (roomNumber){
-        if (roomNumber <= MAX_NUMBER) {
+        if (1<=roomNumber <= MAX_NUMBER && roomNumber!= '') {
                 this.setState({ roomNumberValidate: true, })
             } else {
                 this.setState({ roomNumberValidate: false, })
@@ -84,6 +84,16 @@ class PostForm extends Component {
 
                     />
                 </CardSection>
+
+                <CardSection>
+                    <MessageInput
+                    placeholder = "Description"
+                    label ="Description:"
+                    value={this.state.description}
+                    onChangeText={  description=>this.setState({description})}
+                    />
+                </CardSection>
+
                 <CardSection>
                     <Input
                     placeholder = "please enter address"
@@ -160,14 +170,7 @@ class PostForm extends Component {
                </View>
                </CardSection>
 
-               <CardSection>
-                   <MessageInput
-                   placeholder = "Description"
-                   label ="Description:"
-                   value={this.state.description}
-                   onChangeText={  description=>this.setState({description})}
-                   />
-               </CardSection>
+
 
                 <CardSection>
                 <Button onPress={this.handlePress_create_post.bind(this)}>
