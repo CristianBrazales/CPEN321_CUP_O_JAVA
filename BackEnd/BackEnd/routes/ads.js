@@ -27,61 +27,61 @@ router.post("/posting",
 //--------------------
 function(req,res){
   //----------------------------
-  req.body = req.fields;
+  //req.fields = req.fields;
   //----------------------------
-  var newPosting = new posting({username:req.body.username});
-  newPosting.address = req.body.address;
+  var newPosting = new posting({username:req.fields.username});
+  newPosting.address = req.fields.address;
   console.log("Room number from node backend:");
-  console.log(req.body.roomNumber);
+  console.log(req.fields.roomNumber);
 
   //validating room Number
-  var validRoomNumber = validator.validateRoomNumber(req.body.roomNumber);
+  var validRoomNumber = validator.validateRoomNumber(req.fields.roomNumber);
 
   if(!validRoomNumber){
     res.send({"success":false, "message":"Invalid room number"});
     return;
   }
 
-  // if(req.body.roomNumber<0){
+  // if(req.fields.roomNumber<0){
   //
   //   res.send({"success":false, "message":"Invalid room number"});
   //   return;
   // }
 
 
-  newPosting.roomNumber = req.body.roomNumber;
+  newPosting.roomNumber = req.fields.roomNumber;
 
 
   //validate zip code
 
-  var isValidZipcode = validator.validateZipCode(req.body.zipcode);
+  var isValidZipcode = validator.validateZipCode(req.fields.zipcode);
     if(!isValidZipcode) {
     res.send({"success":false, "message":"Invalid zip code"});
     return;
   }
 
-  // var isValidZipcode = postcode.validate(req.body.zipcode, 'CA');
+  // var isValidZipcode = postcode.validate(req.fields.zipcode, 'CA');
   // if(!isValidZipcode) {
   //   res.send({"success":false, "message":"Invalid zip code"});
   //   return;
   // }
 
   //creating an object for search query
-  newPosting.zipcode = req.body.zipcode.toLowerCase();
-  newPosting.smoke = req.body.smoke;
-  newPosting.earlyMorningPerson = req.body.earlyMorningPerson;
-  newPosting.partyPerson = req.body.partyPerson;
-  newPosting.title = req.body.title;
+  newPosting.zipcode = req.fields.zipcode.toLowerCase();
+  newPosting.smoke = req.fields.smoke;
+  newPosting.earlyMorningPerson = req.fields.earlyMorningPerson;
+  newPosting.partyPerson = req.fields.partyPerson;
+  newPosting.title = req.fields.title;
   //-------------------------
   //console.log("req file in ad.js: "+ req.file);
   //newPosting.image.data = req.file.buffer;
   //newPosting.image.contentType = req.file.mimetype;
-  //newPosting.image64 = req.body.photo;
+  //newPosting.image64 = req.fields.photo;
   newPosting.img.path = req.files.photo.path;
 
   //-------------------------
-  //newPosting.photo = req.body.photo;
-  newPosting.description = req.body.description;
+  //newPosting.photo = req.fields.photo;
+  newPosting.description = req.fields.description;
   //trying to post this data to the database
   posting.create(newPosting,function(err,returnedRoom){
     //error handling
