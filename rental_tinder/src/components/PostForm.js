@@ -205,7 +205,7 @@ class PostForm extends Component {
                   this.props.navigation.navigate('profile');
                 }
                 if (res.success == false){
-                      console.warn("backend ")
+                      
                   alert(res.message);
                 }
                 }).catch((error) => {
