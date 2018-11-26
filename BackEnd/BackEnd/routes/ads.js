@@ -12,13 +12,6 @@ var storage = require('multer-gridfs-storage')({
   url:'mongodb://localhost:27017/rental_tinder_database', useNewUrlParser: true 
 });
 
-var formidable = require('express-formidable');
-//router.use(formidable());
-router.use(formidable({
-    //encoding: 'utf-8',
-    uploadDir: './uploads/',
-    multiples: true, // req.files to be arrays of files
-  }));
 //--------------------
 
 var escapeStringRegexp    = require('escape-string-regexp');
