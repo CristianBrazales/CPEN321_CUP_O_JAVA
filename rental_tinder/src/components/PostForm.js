@@ -3,14 +3,7 @@ import {Button, Card, CardSection,  Input} from './common'
 import {Alert} from 'react-native';
 import { Text, TouchableOpacity, View,Switch, StyleSheet,AsyncStorage} from 'react-native';
 
-import DateTimePicker from 'react-native-modal-datetime-picker';
-import {
-  AppRegistry,
-  Image,
-  PixelRatio,
 
-} from 'react-native';
-import ImagePicker from 'react-native-image-picker';
 const MIN_CHARACTERS = 6;
 const MAX_NUMBER = 20;
 function findAndReplace(string, target, replacement) {
@@ -205,7 +198,7 @@ class PostForm extends Component {
                   this.props.navigation.navigate('profile');
                 }
                 if (res.success == false){
-                      
+
                   alert(res.message);
                 }
                 }).catch((error) => {
