@@ -36,7 +36,7 @@ router.post("/user/edit",function(req,res){
     foundUser.setPassword(req.body.password,function(err){
       if(err){
         console.log(err);
-        res.send({"success":false, "message": "Reset password failed"});
+        res.send({"success":false, "message": {"message":"Reset password failed"}});
         return;
       }
       //editing other parameters for the user
