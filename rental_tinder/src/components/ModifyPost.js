@@ -1,6 +1,6 @@
 import React ,{ Component } from 'react';
-import {Button, Card, CardSection,  Input, MessageInput} from './common';
-import {Text,View,Switch, StyleSheet,Alert} from 'react-native';
+import {Button, Card, CardSection,  Input, MessageInput, LogoutButton} from './common';
+import {Text,View,Switch, StyleSheet,Alert,ScrollView} from 'react-native';
 
 const MIN_CHARACTERS = 6;
 const MAX_NUMBER = 20;
@@ -85,7 +85,7 @@ validate_empty  (title,description,price,zipcode){
         <Text> {this.state.morning.toString()}</Text>
         <Text> {this.state.party.toString()}</Text>
       </View>*/
-
+      <ScrollView>
       <Card>
       <CardSection>
           <Input
@@ -185,7 +185,14 @@ validate_empty  (title,description,price,zipcode){
        </Button>
        </CardSection>
 
+       <CardSection>
+       <LogoutButton onPress={this.handlePress_delete_post.bind(this)}>
+        Delete the post
+       </LogoutButton>
+       </CardSection>
+
       </Card>
+      </ScrollView>
     );
   }
 
@@ -251,6 +258,30 @@ validate_empty  (title,description,price,zipcode){
 
 
     }
+    };
+
+    handlePress_delete_post = async () =>{
+      fetch('http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/delete', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body:'id='+ this.state.id
+      }).then((response) => response.json())
+      .then((res) => {
+
+          if (res.success == true){
+
+            alert("Success!");
+            this.props.navigation.navigate('profile');
+          }
+          if (res.success == false){
+
+            alert(res.message);
+          }
+          }).catch((error) => {
+              alert("delete failed");
+  }).done();
     };
 }
 

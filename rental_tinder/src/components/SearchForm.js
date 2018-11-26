@@ -115,8 +115,7 @@ class SearchForm extends Component{
                   });
                 }
                 if (res.success == false){
-
-                  alert("faild");
+                  alert("No housing found near by, Please try again");
                 }
                 }).catch((error) => {
                     alert("Something goes wrong");
