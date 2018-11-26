@@ -22,6 +22,8 @@ router.post("/search",function(req,res){
     if(err) {
       console.log(err);
       res.send({"success":false, "message":"Error in search"});
+    } else if(Object.keys(foundPosting).length<1){
+      res.send({"success":false, "message": "Nothing found"});
     }
     else{
       res.send({"success":true, "message": foundPosting});
