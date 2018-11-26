@@ -1,5 +1,5 @@
 import React ,{ Component } from 'react';
-import {Button, Card, CardSection,  Input} from './common';
+import {Button, Card, CardSection,  Input, MessageInput} from './common';
 import {Text,View,Switch, StyleSheet,Alert} from 'react-native';
 
 const MIN_CHARACTERS = 6;
@@ -88,14 +88,7 @@ class ModifyPost extends Component{
             />
         </CardSection>
 
-        <CardSection>
-            <Input
-              placeholder = {this.state.description}
-              label ="Description:"
-              value={this.state.description}
-              onChangeText={description => this.setState({ description})}
-              />
-          </CardSection>
+
 
           <CardSection>
               <Input
@@ -167,6 +160,15 @@ class ModifyPost extends Component{
        </View>
        </CardSection>
 
+       <CardSection>
+           <MessageInput
+             placeholder = {this.state.description}
+             label ="Description:"
+             value={this.state.description}
+             onChangeText={description => this.setState({ description})}
+             />
+         </CardSection>
+         
        <CardSection>
        <Button onPress={this.handlePress_change_post.bind(this)}>
         Change!

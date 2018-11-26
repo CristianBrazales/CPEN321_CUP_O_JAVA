@@ -84,7 +84,7 @@ class SignupForm extends Component {
                 </Button>
                 </CardSection>
 
-      
+
             </Card>
         );
     }
@@ -97,10 +97,6 @@ class SignupForm extends Component {
 
         if (this.state.passwordValidate == true && this.state.nameValidate== true) {
 
-            Alert.alert(JSON.stringify(
-                "Sucess log in, please "
-
-            ));
 
             fetch('http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/register', {
                 method: 'POST',
@@ -109,8 +105,25 @@ class SignupForm extends Component {
                 },
                 body: 'username=' + this.state.userName + '&password=' + this.state.password + '&email=' + this.state.email + '&phonenumber=' + this.state.phonenumber
             })
-                .catch(error => console.error('Error:', error));
-            this.props.navigation.navigate('login');
+
+
+
+
+            .then((response) => response.json())
+            .then((res) => {
+
+                if (res.success == true) {
+                  this.props.navigation.navigate('login');
+                }
+                else {
+                    alert(res.message.message);
+
+                }
+            }).catch((error) => {
+                alert("something goes wrong");
+
+            })
+
         }
         // look for the error
         else {

@@ -14,7 +14,8 @@ const PostDetail = ({ info,navigation }) => {
       headerContentStyle,
       thumbnailContainerStyle,
       headerTextStyle,
-      imageStyle
+      imageStyle,
+      shownstyle
     } = styles;
 
     function sendemail(){
@@ -28,9 +29,9 @@ const PostDetail = ({ info,navigation }) => {
         <View style={headerContentStyle}>
           <Text style={headerTextStyle}>{"Title: "}{title}</Text>
           <View><Text style={{fontWeight: 'bold'}}>Description: </Text><Text>{description}</Text></View>
-          <View><Text style={{fontWeight: 'bold'}}>Address: </Text><Text>{address}</Text></View>
-          <View><Text style={{fontWeight: 'bold'}}>Price: </Text><Text>{price}</Text></View>
-          <View><Text style={{fontWeight: 'bold'}}>Username: </Text><Text>{username}</Text></View>
+          <View style={shownstyle}><Text style={{fontWeight: 'bold'}}>Address: </Text><Text>{address}</Text></View>
+          <View style={shownstyle}><Text style={{fontWeight: 'bold'}}>Price: </Text><Text>{price}</Text></View>
+          <View style={shownstyle}><Text style={{fontWeight: 'bold'}}>Username: </Text><Text>{username}</Text></View>
         </View>
       </CardSection>
 
@@ -46,12 +47,16 @@ const PostDetail = ({ info,navigation }) => {
 
 
   const styles = {
+    shownstyle:{
+      flexDirection: 'row',
+    },
     headerContentStyle: {
       flexDirection: 'column',
       justifyContent: 'space-around'
     },
     headerTextStyle: {
-      fontSize: 18
+      fontSize: 18,
+      fontWeight: 'bold'
     },
     thumbnailStyle: {
       height: 50,

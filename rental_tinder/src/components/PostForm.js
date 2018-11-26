@@ -1,5 +1,5 @@
 import React ,{ Component } from 'react';
-import {Button, Card, CardSection,  Input} from './common'
+import {Button, Card, CardSection,  Input, MessageInput} from './common'
 import {Alert} from 'react-native';
 import { Text, TouchableOpacity, View,Switch, StyleSheet,AsyncStorage} from 'react-native';
 
@@ -110,14 +110,6 @@ class PostForm extends Component {
                     onChangeText={zipcode =>this.setState({zipcode})}
                     />
                 </CardSection>
-                <CardSection>
-                    <Input
-                    placeholder = "Description"
-                    label ="Description:"
-                    value={this.state.description}
-                    onChangeText={  description=>this.setState({description})}
-                    />
-                </CardSection>
 
                 <CardSection>
                     <Input
@@ -167,6 +159,14 @@ class PostForm extends Component {
                </View>
                </CardSection>
 
+               <CardSection>
+                   <MessageInput
+                   placeholder = "Description"
+                   label ="Description:"
+                   value={this.state.description}
+                   onChangeText={  description=>this.setState({description})}
+                   />
+               </CardSection>
 
                 <CardSection>
                 <Button onPress={this.handlePress_create_post.bind(this)}>
@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   paragraph:{
-      fontSize: 19,
+    fontSize: 19,
     paddingLeft: 5,
     flex: 1
   },

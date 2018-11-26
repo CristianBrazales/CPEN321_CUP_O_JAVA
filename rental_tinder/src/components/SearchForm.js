@@ -35,7 +35,7 @@ class SearchForm extends Component{
 
                 <CardSection>
                 <View style={styles.container} >
-                <Text style={styles.paragraph}>Please enter your roommate preferences:</Text>
+                <Text style={styles.paragraph}>Please enter your teenant preferences:</Text>
                 </View>
                 </CardSection>
 

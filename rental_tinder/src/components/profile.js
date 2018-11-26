@@ -22,7 +22,7 @@ class profile extends Component {
     constructor(props) {
         super(props);
        // var name = await AsyncStorage.getItem('user');
-        this.state = { username: '' , zipcode:''};
+        this.state = { username: '' , zipcode:'', out:''};
 
 
     }
@@ -100,6 +100,26 @@ class profile extends Component {
     logout = () => {
         AsyncStorage.removeItem('user');
         this.props.navigation.navigate('login');
+        fetch('http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/logout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+           body:'out=' + this.state.out
+        }).then((response) => response.json())
+        .then((res) => {
+
+            if (res.success == true){
+              AsyncStorage.removeItem('user');
+              this.props.navigation.navigate('login');
+            }
+            if (res.success == false){
+
+              alert("faild");
+            }
+            }).catch((error) => {
+                alert("Something goes wrong");
+    }).done();
 
     }
     create_post = () => {/*
@@ -189,7 +209,7 @@ class profile extends Component {
       .then((res) => {
 
           if (res.success == true){
-
+            this.setState({zipcode:""});
             this.props.navigation.navigate('tmppage',{
               itemId: 86,
               otherParam: res.message,

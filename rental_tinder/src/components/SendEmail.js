@@ -1,5 +1,5 @@
 import React ,{ Component } from 'react';
-import {Button, Card, CardSection,  Input} from './common'
+import {Button, Card, CardSection,  Input, MessageInput} from './common'
 import {Alert} from 'react-native';
 import { Text, TouchableOpacity, View,Switch, StyleSheet,AsyncStorage} from 'react-native';
 
@@ -48,7 +48,7 @@ render(){
           </CardSection>
 
           <CardSection>
-              <Input
+              <MessageInput
                 placeholder = ""
                 label ="message:"
                 value={this.state.message}
@@ -81,7 +81,7 @@ render(){
     .then((res) => {
 
         if (res.success == true){
-    
+
           alert("Success!");
           this.props.navigation.navigate('tmppage');
         }

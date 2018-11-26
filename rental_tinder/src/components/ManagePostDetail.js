@@ -11,7 +11,8 @@ const ManagePostDetail = ({ info,navigation}) => {
       headerContentStyle,
       thumbnailContainerStyle,
       headerTextStyle,
-      imageStyle
+      imageStyle,
+      shownstyle,
     } = styles;
     function senddata(){
       navigation.navigate('modifypost',{
@@ -33,9 +34,9 @@ const ManagePostDetail = ({ info,navigation}) => {
           <View style={headerContentStyle}>
             <Text style={headerTextStyle}>{"Title: "}{title}</Text>
             <View><Text style={{fontWeight: 'bold'}}>Description: </Text><Text>{description}</Text></View>
-            <View><Text style={{fontWeight: 'bold'}}>Address: </Text><Text>{address}</Text></View>
-            <View><Text style={{fontWeight: 'bold'}}>Price: </Text><Text>{price}</Text></View>
-            <View><Text style={{fontWeight: 'bold'}}>Username: </Text><Text>{username}</Text></View>
+            <View style={shownstyle}><Text style={{fontWeight: 'bold'}}>Address: </Text><Text>{address}</Text></View>
+            <View style={shownstyle}><Text style={{fontWeight: 'bold'}}>Price: </Text><Text>{price}</Text></View>
+            <View style={shownstyle}><Text style={{fontWeight: 'bold'}}>Username: </Text><Text>{username}</Text></View>
           </View>
         </CardSection>
 
@@ -51,6 +52,9 @@ const ManagePostDetail = ({ info,navigation}) => {
 
 
   const styles = {
+    shownstyle:{
+      flexDirection: 'row',
+    },
     headerContentStyle: {
       flexDirection: 'column',
       justifyContent: 'space-around'
