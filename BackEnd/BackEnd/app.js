@@ -38,6 +38,7 @@ var searchRoute               = require("./routes/searching");
 var editUserRoute             = require("./routes/editUser");
 var editPostRoute             = require("./routes/editPosts");
 var emailRoute                = require("./routes/aemail");
+var deleteRoute               = require("./routes/delete");
 //================
 //APP Config
 //================
@@ -91,6 +92,7 @@ app.use(searchRoute);
 app.use(editUserRoute);
 app.use(editPostRoute);
 app.use(emailRoute);
+app.use(deleteRoute);
 //==========
 // Authentication routes
 //===========
