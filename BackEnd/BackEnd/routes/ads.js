@@ -69,7 +69,7 @@ function(req,res){
   newPosting.partyPerson = req.body.partyPerson;
   newPosting.title = req.body.title;
   //-------------------------
-  console.log("req file: "+ req.file);
+  console.log("req body in ad.js: "+ req.body);
   newPosting.image.data = req.file.buffer;
   newPosting.image.contentType = req.file.mimetype;
   //-------------------------
