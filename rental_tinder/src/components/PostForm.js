@@ -52,8 +52,8 @@ class PostForm extends Component {
     }));
    // validate the address input
     validate_address (address) {
-        alph = /^\d+\s[A-z]+\s[A-z]+/
-        if (alph.test(address) && address.length > MIN_CHARACTERS) {
+
+        if (address!='') {
             this.setState({ addressValidate: true, })
         } else {
             this.setState({ addressValidate: false, })
@@ -61,7 +61,7 @@ class PostForm extends Component {
     }
     //validate the password input
     validate_roomNumber  (roomNumber){
-        if (1<=roomNumber <= MAX_NUMBER && roomNumber!= '') {
+        if (roomNumber!= '') {
                 this.setState({ roomNumberValidate: true, })
             } else {
                 this.setState({ roomNumberValidate: false, })

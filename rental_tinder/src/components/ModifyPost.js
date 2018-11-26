@@ -7,8 +7,8 @@ const MAX_NUMBER = 20;
 class ModifyPost extends Component{
 
   validate_address (address) {
-      alph = /^\d+\s[A-z]+\s[A-z]+/
-      if (alph.test(address) && address.length > MIN_CHARACTERS) {
+
+      if (address!='') {
           this.setState({ addressValidate: true, })
       } else {
           this.setState({ addressValidate: false, })
@@ -16,7 +16,7 @@ class ModifyPost extends Component{
   }
   //validate the password input
   validate_roomNumber  (roomNumber){
-      if (roomNumber <= MAX_NUMBER && roomNumber!= '') {
+      if ( roomNumber!= '') {
               this.setState({ roomNumberValidate: true, })
           } else {
               this.setState({ roomNumberValidate: false, })
@@ -237,7 +237,7 @@ validate_empty  (title,description,price,zipcode){
         }
         else if (this.state.roomNumberValidate == false) {
             Alert.alert(JSON.stringify(
-                "please check the room number  (Maximum 20 rooms)"
+                "please check the room number  "
 
             ));
         }

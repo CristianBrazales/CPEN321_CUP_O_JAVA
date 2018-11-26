@@ -5,7 +5,7 @@ import { Text, TouchableOpacity, View,Switch, StyleSheet,AsyncStorage} from 'rea
 
 class SendEmail extends Component{
 
-  state = {username:'', name:'', email:'', phonenumber:'', message:'' };
+  state = {username:'', name:'', email:'', phonenumber:'', message:'' ,emptyValidate:false};
 
   getdata = async () =>{
     const { navigation } = this.props;
@@ -14,6 +14,14 @@ class SendEmail extends Component{
   }
   componentDidMount(){
       this.getdata().done();
+  }
+  validate_empty  (name,email,phonenumber,message){
+      if (name!='' && email!='' && phonenumber!=''&& message!='') {
+              this.setState({ emptyValidate: true, })
+          } else {
+              this.setState({ emptyValidate: false, })
+          }
+
   }
 
 render(){
@@ -73,6 +81,9 @@ render(){
   );
 }
   handlePress_send_email = async () =>{
+    await this.validate_empty(this.state.name,this.state.email,this.state.phonenumber,this.state.message)
+
+    if(this.state.emptyValidate==true){
     fetch('http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/email', {
         method: 'POST',
         headers: {
@@ -96,6 +107,13 @@ render(){
         }).catch((error) => {
             alert("Email sending failed");
           }).done();
+        }
+        else{
+          Alert.alert(JSON.stringify(
+              "please fill all the empty boxes"
+
+          ));
+        }
   };
 
 }

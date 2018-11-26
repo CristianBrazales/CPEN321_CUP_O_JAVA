@@ -116,7 +116,7 @@ class EditProfile extends Component{
               }
               if (res.success == false){
 
-                alert("faild");
+                  alert(res.message.message);
               }
               }).catch((error) => {
                   alert("Something goes wrong");
