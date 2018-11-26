@@ -1,7 +1,7 @@
 import React from 'react';
 import {TextInput, View, Text} from 'react-native';
 
-const Input = ({ label, value, onChangeText, placeholder, secureTextEntry , testID}) => {
+const SearchInput = ({ label, value, onChangeText, placeholder, secureTextEntry , testID}) => {
     const { inputStyle, labelStyle, containerStyle } = styles;
 
     return (
@@ -32,7 +32,7 @@ const styles = {
     labelStyle: {
       fontSize: 19,
       paddingLeft: 5,
-      flex: 1.5
+      flex: 0
     },
     containerStyle: {
       height: 40,
@@ -41,4 +41,4 @@ const styles = {
       alignItems: 'center'
     }
   };
-export {Input};
+export {SearchInput};

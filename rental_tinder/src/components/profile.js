@@ -1,7 +1,7 @@
 // JavaScript source code
 import React, { Component } from 'react';
 import { View, AsyncStorage, StyleSheet, KeyboardAvoidingView, TouchableOpacity, Text } from 'react-native';
-import { Button, Card, CardSection, Welcome_header } from './common';
+import { Button, Card, CardSection, Welcome_header ,Input,SearchButton, SearchInput,LogoutButton} from './common';
 //import SignupForm from 'SignupForm';
 import { StackNavigator } from 'react-navigation';
 // The main pages which is shown to the user, The loginform contains two input secion (Email, Password) and two buttons (login and signup)
@@ -22,7 +22,7 @@ class profile extends Component {
     constructor(props) {
         super(props);
        // var name = await AsyncStorage.getItem('user');
-        this.state = { username: '' };
+        this.state = { username: '' , zipcode:''};
 
 
     }
@@ -138,19 +138,21 @@ class profile extends Component {
                 <Card>
 
                 <CardSection>
-                        <Button onPress={() => this.props.navigation.navigate('post_screen') }>
-                    Post your place!
-                </Button>
-                </CardSection>
-                <CardSection>
-                        <Button onPress={this.search}>
-                        advance search!
-                </Button>
+                <SearchInput
+                  placeholder = "Quick Search Here"
+                  value={this.state.zipcode}
+                  onChangeText={zipcode => this.setState({ zipcode})}
+                  /><SearchButton onPress={this.handlePress_general_search.bind(this)}>Search!</SearchButton>
                 </CardSection>
 
                 <CardSection>
+                        <Button onPress={() => this.props.navigation.navigate('post_screen') }>
+                    Post your place
+                </Button>
+                </CardSection>
+                <CardSection>
                         <Button onPress={this.search}>
-                    Look for a place (advance search)!
+                        Advance search
                 </Button>
                 </CardSection>
 
@@ -162,20 +164,44 @@ class profile extends Component {
 
                 <CardSection>
                 <Button onPress={this.changeprofile.bind(this)}>
-                      Change my profile!
+                      Change my profile
                 </Button>
                 </CardSection>
 
                 <CardSection>
-                <Button onPress={this.logout}>
+                <LogoutButton onPress={this.logout}>
                     Log out!
-                </Button>
+                </LogoutButton>
                 </CardSection>
 
                 </Card>
             </View>
         );
     }
+    handlePress_general_search = async () =>{
+      fetch('http://ec2-18-236-130-168.us-west-2.compute.amazonaws.com:5000/regex', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body:'zipcode='+ this.state.zipcode
+      }).then((response) => response.json())
+      .then((res) => {
 
+          if (res.success == true){
+
+            this.props.navigation.navigate('tmppage',{
+              itemId: 86,
+              otherParam: res.message,
+            });
+          }
+          if (res.success == false){
+
+            alert("No housing found near by, Please try again");
+          }
+          }).catch((error) => {
+              alert("Something goes wrong");
+  }).done();
+    };
 }
 export default profile;
